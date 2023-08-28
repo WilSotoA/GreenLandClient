@@ -1,0 +1,48 @@
+.globalCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+}
+
+.globalCont h2 {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    color: var(--verdePrincipal);
+    font-style: italic;
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+hr {
+    border-color: var(--verdePrincipal);
+    border-width: 2px;
+    border-style: solid;
+   
+}
+
+.globalCont div {
+   width: 50%;
+   text-align: justify;
+}
+
+.cards{
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr;
+    justify-items: center;
+    align-items: center;
+    row-gap: 25px;
+    margin: 30px 25% 30px 25%;
+    justify-content: center;
+    padding: 20px 50px 20px 50px;
+    background-color: var(--verdeClaro);
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+hr{
+    width: 50%;
+}

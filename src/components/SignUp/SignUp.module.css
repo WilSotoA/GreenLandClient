@@ -1,0 +1,155 @@
+:root {
+  --verdePrincipal: #8CB799;
+  --verdeClaro: #D0E1D6;
+  --fontGlobal: Arial, Helvetica, sans-serif;
+}
+
+.signup {
+  position: relative;
+  max-width: 400px;
+  max-height: 1000px;
+  width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.prodsContLoader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.prodsContLoader img {
+  width: 30%;
+}
+
+.formLabel {
+  font-family: 'Kanit', sans-serif;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--verdePrincipal);
+}
+
+.formInput {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.formElement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+}
+
+
+.greenText {
+  color: var(--verdePrincipal);
+}
+
+.backButton {
+  text-align: left;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--verdePrincipal);
+}
+
+.chevron {
+  font-size: 20px;
+}
+
+.centeredText {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.getStarted {
+  font-weight: bold;
+}
+
+
+.errorText {
+  color: red;
+  font-size: 14px;
+  padding: 2px;
+  /* Add some padding around the error message */
+  border-radius: 4px;
+  max-width: 200px;
+  align-items: center;
+  margin-bottom: 100px;
+
+}
+
+.agreeData {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 5px;
+}
+
+.formLabel1 {
+  margin-right: 100px;
+}
+
+.checkIcon {
+  margin-right: 10px;
+}
+
+.personalData {
+  font-size: 14px;
+  margin-left: 10px;
+
+}
+
+.button {
+  background-color: var(--verdePrincipal);
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.greenButton {
+  background-color: var(--verdePrincipal);
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
+}
+
+.signUpText {
+  font-weight: bold;
+}
+
+.login {
+  text-align: right;
+  text-decoration: underline;
+}
+
+.haveAccount {
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+.loginLink {
+  color: black;
+  text-decoration: none;
+}

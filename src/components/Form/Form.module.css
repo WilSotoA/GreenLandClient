@@ -1,0 +1,92 @@
+.creationForm {
+    max-width: 300px;
+    max-height: 1000px;
+    margin:  auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 4%;
+    margin-bottom: 4%;
+
+  }
+
+  .formTitle {
+    font-family: 'Kanit', sans-serif;
+    margin-top: 0%;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black;
+  }
+  
+  .formLabel {
+    font-family: 'Kanit', sans-serif;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--verdePrincipal);
+  }
+
+  .formLabel1 {
+    display: block;
+    margin-bottom: 8px;
+    color: #000000;
+  }
+  
+  .formInput{
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: black;
+  }
+  .formSelect {
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .formSelect {
+    height: 40px;
+  }
+  
+  .formError {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .selectedCategory {
+    display: inline-block;
+    background-color: var(--verdePrincipal);
+    padding: 5px 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    margin-right: 20%;
+    margin-bottom: 5px;
+  }
+  
+  .formButton {
+    background-color: var(--verdePrincipal);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .formButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .imagePreview {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+}
+  

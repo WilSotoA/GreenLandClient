@@ -1,0 +1,123 @@
+  .contactUs {
+    text-align: center;
+    margin: 2% 5% 2% 5%;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+  }
+  
+  .contactLinks {
+    margin-top: 70px;
+  }
+  
+  .contactForm h2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 8%;
+  }
+
+  .contactLinks a {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--verdeClaro);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .contactLinks a:hover {
+    background-color: var(--verdeClaro);
+    color: #fff;
+  }
+  
+  .contactForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .formGroup {
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--verdePrincipal)
+  }
+  
+  .formGroup p {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--verdePrincipal)
+  }
+  
+  .formGroup input[type="text"],
+  .formGroup input[type="email"],
+  .formGroup textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--verdePrincipal);
+    border-radius: 3px;
+  }
+  
+  .formGroup textarea {
+    height: 120px;
+    resize: none;
+  }
+  
+  .formGroup button[type="submit"] {
+    background-color: var(--verdePrincipal);
+    color: #000000;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .formGroup button[type="submit"]:hover {
+    background-color: var(--verdeClaro);
+  }
+
+  hr {
+    border-color: var(--verdePrincipal); 
+    border-width: 2px; 
+    border-style: solid;
+    display: flex;
+    align-self: center;
+  }
+ 
+ .formGroup .errorText{
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: red
+ }
+
+
+
+  .imageContainer {
+    flex: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    max-width: fit-content;
+  }

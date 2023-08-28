@@ -1,0 +1,253 @@
+.navCont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-height: max-content;
+    padding: 0 5% 0 5%;
+    font-family: var(--fontGlobal);
+}
+
+.navLinkCont {
+    display: flex;
+    flex-direction: row;
+}
+
+.navContFix {
+    box-sizing: border-box;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--verdePrincipal);
+    z-index: 1;
+}
+
+.navCont img {
+    width: 20%;
+}
+
+.navLink {
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px;
+    color: var(--verdePrincipal);
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.navLink:hover {
+    color: #CDE0D2;
+}
+
+.navLinkFix {
+    color: white;
+}
+
+.navLinkFix:hover {
+    color: #CDE0D2;
+}
+
+.active {
+    color: white;
+    background-color: var(--verdePrincipal);
+    border-radius: 0 80px;
+    transition: all 1s;
+}
+
+.activeFix {
+    color: var(--verdePrincipal);
+    background-color: white;
+    border-radius: 0 80px;
+    transition: all 1s;
+}
+
+.buttonCont {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.buttonCont button {
+    padding: 10px;
+    border-radius: 20px;
+    width: 90px;
+    font-size: 15px;
+}
+
+.buttonCont button:hover {
+    cursor: pointer;
+}
+
+.buttonLog {
+    border: 0;
+    outline: 0;
+    padding: 10px;
+    background-color: var(--verdePrincipal);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    width: 80px;
+    text-align: center;
+    align-items: center;
+}
+
+.buttonLogFix {
+    padding: 10px;
+    background-color: var(--verdePrincipal);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    width: 80px;
+    text-align: center;
+    align-items: center;
+    border: 2px  solid white;
+}
+
+.buttonCart {
+    color: var(--verdePrincipal);
+    padding: 5px;
+    border: 2px  solid var(--verdePrincipal);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: centers;
+}
+
+.buttonCartFix {
+    color: white;
+    padding: 5px;
+    border: 2px  solid white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: centers;
+}
+
+.buttonCart:hover{
+    cursor: pointer;
+}
+
+.buttonSign {
+    border-color: var(--verdePrincipal);
+    border-radius: 30px;
+    align-items: center;
+    border-width: 2px;
+    padding: 10px;
+    border-style: solid;
+    text-align: center;
+    background-color: white;
+    color: var(--verdePrincipal);
+    text-decoration: none;
+    width: 80px;
+}
+
+.navButtonShow {
+    display: none;
+}
+
+.navButtonNoShow {
+    display: none;
+}
+
+/* .navCont button{
+    display: none;
+} */
+.navLinkRespon{
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 960px) {
+    /* .navCont button{
+        display: none;
+    } */
+    .navCont {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-height: max-content;
+        padding: 1% 5% 1% 5%;
+        font-family: var(--fontGlobal);
+    }
+
+    .navCont img {
+        width: 50%;
+    }
+    
+    .buttonCont {
+        display: none;
+    }
+
+    .navLinkCont {
+        display: none;
+    }
+    
+    .navLinkRespon{
+        display: flex;
+        flex-direction: column;
+        background-color: var(--verdePrincipal);
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        width: 80%;
+        height: 50vh;
+        justify-content: space-evenly;
+    }
+
+    .navLink{
+        text-decoration: none;
+        font-size: 30px;
+        padding: 0;
+        color: var(--verdeClaro);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        height: 25%;
+        align-items: center;
+    }
+
+    .navButtonShow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-color: var(--verdeClaro);
+        background-color: var(--verdePrincipal);
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        z-index: 5;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+
+    }
+
+    .navButtonNoShow {
+        display: none;
+    }
+
+    .activeFix {
+        color: var(--verdePrincipal);
+        background-color: white;
+        border-radius: 0 80px;
+        transition: all 1s;
+    }
+    
+    
+}
+
+@media (min-width:961px) and (max-width: 1800px) {
+    .navCont {
+    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-height: max-content;
+        padding: 1% 5% 1% 5%;
+        font-family: var(--fontGlobal);
+    }
+}

@@ -1,0 +1,117 @@
+.container{
+  align-self: flex-end;
+    background-color: var(--verdePrincipal);
+    margin-top: 1%;
+}
+
+.grupo1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.logo_greenland{
+    margin-top: 7px;
+    width: 300px;
+    justify-content: center;
+
+  }
+.grupo2{
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;
+    /* padding: 45px 0px; */
+    width: 100%;
+    height: max-content;
+}
+
+.left{
+    display:flex;
+    margin: 15px;
+    /* background-color: blue;     */
+    align-content: center;
+    justify-content: baseline;
+    height: min-content;
+}
+
+.center{
+    display:flex;
+    margin: 5px;
+    align-content:center;
+    align-items:flex-end;
+    justify-content: center;
+    width: 100%;
+    height: min-content;
+    /* background-color: aqua; */
+}
+
+.links {
+    text-decoration-line:none ;
+    outline: none;
+    font-size:1rem;
+    margin: 10px;
+    transition: background-color 0.4s, color .4s;
+}
+.links:link {
+    color: black;
+  }
+  
+  .links:visited {
+    color: black;
+  }
+  
+  /* .links:focus {
+    border-bottom: 1px solid;
+    background: blue;
+  } */
+  
+  .links:hover {
+    border-bottom: 1px solid;
+    background: transparent;
+  }
+  
+  /* .links:active {
+    background: transparent;
+    color: white;
+  } */
+
+ 
+
+.right{
+    display: flex;    
+    margin: 0 15px 10px 0;
+    /* background-color: blueviolet; */
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+    height: min-content;
+}
+
+.right .icon_image img{
+    display:flex;
+    margin: 5px;
+    width: 40px;
+}
+
+.right .icon_image img:hover{
+    filter: opacity(.5);
+}
+
+@media (max-width: 1040px) {
+  .grupo2{
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+    /* padding: 45px 0px; */
+    width: 100%;
+    height: fit-content;
+    justify-items: center;
+  }
+
+  .grupo2 h3{
+    position: inherit;
+  }
+}

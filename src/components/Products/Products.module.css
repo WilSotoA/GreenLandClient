@@ -1,0 +1,160 @@
+.prodsParent {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: 0.5fr 9.5fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.filters { /*AQUI VAN LOS FILTROS*/
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    justify-self: center;  
+    flex-wrap: wrap; 
+    margin: 1.5vh;
+    padding: 10px;
+    background-color: var(--verdeClaro);
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 96.7%;
+    position: relative;
+}
+
+.bestSeller {
+    background-color: var(--superLightGreen);
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    height: fit-content;
+    font-size: 100%;
+    color: var(--verdePrincipal);
+}
+
+.checkbox:checked {
+   accent-color: var(--verdePrincipal);
+}
+
+.checkbox:hover {
+    cursor: pointer;
+}
+
+.filters select{
+    background-color: var(--superLightGreen);
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    height: fit-content;
+    font-size: 100%;
+    outline-color: var(--verdePrincipal);
+    color: var(--verdePrincipal);
+}
+
+.filters select:hover {
+    cursor: pointer;
+}
+
+.searchBarContainer {
+    height: fit-content;
+}
+
+.rangeSlider {
+    width: 10vw;
+    background-color: var(--superLightGreen);
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--verdePrincipal);
+}
+
+.collapsiveList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--superLightGreen);
+    padding: 8px;
+    border-radius: 5px;
+    justify-content: center;
+    color: var(--verdePrincipal);
+    font-size: 100%;
+}
+
+.collapsiveList svg {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.filtersCategOpt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+    justify-content: center;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 2;
+    width: 20%;
+    box-sizing: border-box;
+    background-color: var(--verdeClaro);
+    padding: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: height 0.05s ease-in-out, opacity 0.05s ease-in-out;
+    opacity: 0;
+    height: auto;
+}
+
+.filtersCategOpt.closed {
+    height: 0;
+    opacity: 0;
+}
+
+.filtersCategOpt label {
+    background-color: var(--superLightGreen);
+    padding: 0.3vw;
+    border-radius: 10px;
+    width: calc(50% - 0.5vw);
+    font-size: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.filtersCategOpt input {
+    color: var(--verdePrincipal);
+}
+
+.filtersCategOpt input:hover {
+    cursor: pointer;
+}
+
+.filtersCategOptClose {
+    display: none;
+}
+
+.filtersCategOpt input:checked {
+    accent-color: var(--verdePrincipal);
+}
+
+.prodsGrid {  /*ESTA ES EL ASIDE*/
+    grid-area: 2 / 1 / 3 / 2; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    justify-items: center;
+    row-gap: 30px;
+    margin-top:1vh;
+    box-sizing: border-box;
+    width: 96.5%;
+    justify-self: center;
+}

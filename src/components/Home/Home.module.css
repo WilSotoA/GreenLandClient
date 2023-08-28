@@ -1,0 +1,114 @@
+.parent {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    padding: 4% 4% 2% 4%;
+    height: auto;
+    margin: 0;
+}
+
+.div1 { 
+    grid-area: 1 / 1 / 2 / 2; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: justify;
+    margin: 0 0 0 15%;
+}
+
+.div1 > h1{ 
+    position: relative;
+    background-image:  linear-gradient(90deg, hsla(182, 99%, 31%, 1) 0%, hsla(182, 85%, 15%, 1) 100%);
+    -webkit-background-clip: text;
+    font-size: 5em;
+    margin: 0;
+    padding: 0;
+    color: transparent;
+}
+
+.div1 > h1::before{
+    content: 'DISCOVER';
+    position: absolute; 
+    top: -30px;
+    font-size: 30px;
+    color: black;
+}
+
+.div1 hr {
+    width: 50%;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.buttonLink {
+    width: fit-content;
+    padding: 10px 30px;
+    margin-top: 30px;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    background-color: var(--verdePrincipal);
+    color: white;
+    text-decoration: none;
+}
+
+.buttonLink:hover {
+    cursor: pointer;
+}
+
+.div2 {
+    grid-area: 1 / 2 / 2 / 3; 
+}
+
+@media (max-width: 1234px) {
+    .parent {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas: 
+                            'div1'
+                            'div2';
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        padding: 0;
+        justify-items: center;
+        margin-bottom: 20px;
+    }
+
+    .div1 { 
+        width: 80%;
+        grid-area: div1;
+        margin: 0;
+        padding-top: 10%;
+    }
+
+    .div2 { 
+        grid-area: div2;
+    }
+
+    .div1 > h1{ 
+        position: relative;
+        background-image:  linear-gradient(90deg, hsla(182, 99%, 31%, 1) 0%, hsla(182, 85%, 15%, 1) 100%);
+        -webkit-background-clip: text;
+        font-size: 60px;
+        margin: 0;
+        padding: 0;
+        color: transparent;
+    }
+}
+
+.prodsContLoader {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 1235px) and (max-width: 1630px) {
+    .div1 > h1{ 
+        font-size: 2.7em;
+    }
+}

@@ -1,0 +1,113 @@
+@import url(https://fonts.googleapis.com/css?family=Satisfy);
+@import url(https://fonts.googleapis.com/css?family=Acme);
+
+.prodCont{
+    position: relative;
+    box-sizing: border-box;
+    width: 16em;
+    height: 22em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-style: solid;
+    border-radius: 5px;
+    border-style: none;
+    padding: 0;
+    box-shadow: 0px 1px 20px var(--verdeClaro);
+    background-color: var(--verdeClaro);
+}
+
+.prodCont img{
+    position:relative;
+    top: -40px;
+    max-width: 100%;
+    clip-path: polygon(0 15%, 100% 16%, 100% 66%, 0 80%);
+}
+
+.prodCont > h2, h3, p {
+    margin: 0;
+    position: absolute;
+    text-align: center;
+}
+
+.prodCont > h2 {
+    font-size: 20px;    
+    text-transform: uppercase;
+    top: 50%;
+    font-family: 'Acme', sans-serif;
+}
+
+.prodCont > p {
+    font-size: 20px;    
+    bottom: 15%;
+    width: 100%;
+}
+
+.prodCont > h3 {
+    font-family: 'Satisfy', cursive;
+    font-size: 0.8em;
+    top: 65%;
+}
+
+.prodCont > p::before,
+.prodCont > p::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    display: block;
+    position: absolute;
+    background-color: var(--verdePrincipal);
+    top: 50%;
+}
+
+.prodCont > p::before {
+    left: 24px;
+}
+  
+.prodCont > p::after {
+    right: 24px;
+}
+
+.prodCart {
+    position: absolute;
+    background-color: var(--verdePrincipal);
+    top: 33%;
+    right: 5%;
+    padding: 10px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    color: white;
+    transition: background-color 0.4s, color .4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prodCart:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--verdePrincipal);
+}
+
+.prodHeartEmpty{
+    position:absolute;
+    right: 5%;
+    top: 5%;
+}
+
+.prodHeartEmpty:hover{
+    cursor: pointer;
+}
+
+.prodStarCont {
+    display: flex;
+    align-items: center;
+    margin-top: 19%;
+}
+
+.star {
+    position: relative;
+    color: var(--verdePrincipal);
+    margin-right: 2px; 
+}
