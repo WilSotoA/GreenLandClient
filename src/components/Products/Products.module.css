@@ -158,3 +158,9 @@
     width: 96.5%;
     justify-self: center;
 }
+
+.prodsContLoader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
