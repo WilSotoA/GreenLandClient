@@ -4,6 +4,7 @@ import emailjs from '@emailjs/browser';
 import githubIcon from "../../assets/githubicon.png"
 import linkedinIcon from "../../assets/linkedingicon.png"
 import ceroWaste from "../../assets/CeroWasteCycle.avif"
+import { alertAcept } from '../SweetAlert/SweetAlert';
 
 export const ContactUs = () => {
 
@@ -80,6 +81,7 @@ const [formData, setFormData] = useState({
           subject: '',
           message: ''
         })
+        alertAcept('success','Contact Us','Your message has been sent. Well get back to you soon!')
     }, (error) => {
         console.log(error.text);
         setSuccess(false)
@@ -115,9 +117,9 @@ const [formData, setFormData] = useState({
           </div>
           <div className={style.formGroup}>
             <button type="submit">Submit</button>
-            {success === true && (
+            {/* {success === true && (
             <p className={style.successText}>Your message has been sent. We'll get back to you soon!</p>
-            )}
+            )} */}
             {success === false && (
             <p className={style.errorText}>An error occurred. Please try again later.</p>
             )}
