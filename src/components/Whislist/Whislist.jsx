@@ -20,7 +20,7 @@ export const WhisList = () => {
     }, [whisList])
 
     return (
-        <main className={styled.containeWhislist}>
+        <main>
             {
                 cantWhisList === true ?
                     <section className={styled.prodsGrid}>

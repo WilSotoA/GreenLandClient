@@ -1,0 +1,86 @@
+.CustomerSection{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    max-height: 95%;
+    
+  }
+  /*elimina los botones */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+    
+  .Table{
+      height: 100%;
+      border: 1px solid #ddd;
+      overflow-y: scroll;      
+  }
+  .Table::-webkit-scrollbar{
+      width: 7px;
+  }
+  .Table::-webkit-scrollbar-thumb{
+      background-color: var(--verdePrincipal);
+      border-radius: 10px;
+  }
+
+  .imageProduct{
+    width: 20%;
+    height: 20%;
+  }
+
+  .MuiTableRow-root > * {
+      padding: 10px;
+    }
+    
+    .head > * {
+      font-weight: bold !important;
+    }
+    
+    
+    .Table:first-child {
+      border-radius: 0.7rem !important;
+    }
+
+    .inputs{
+        width:80px;
+        font-size:medium;
+        text-align: center;
+    }
+
+    .buttonstatus {
+      border: 1px var(--verdePrincipal);
+      padding: 8px;
+      border-radius: 9px;
+    }
+    .buttonstatus:hover{
+      cursor: pointer;
+    }
+    
+    .Details {
+      color: #00b5ff !important;
+    }
+  
+    .Table h3{
+      margin-bottom: 20px !important;
+    }
+    
+    @media screen and (max-width: 1200px) {
+      .Table {
+        width: 170%;
+        margin-top: 2rem;
+      }
+    }
+    
+    
+    @media screen and (max-width: 768px) {
+      .Table{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 23rem;
+      }
+    }

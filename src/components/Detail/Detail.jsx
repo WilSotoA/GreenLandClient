@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from './Detail.module.css'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getIdProduct, getWhisList, deleteWhisList } from '../../redux/action'
 import { BsCart2 } from 'react-icons/bs'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { useRef } from "react";
-import {alertConfirm,alertAcept} from '../SweetAlert/SweetAlert'
+import { alertConfirm, alertAcept } from '../SweetAlert/SweetAlert'
+import Reviews  from '../Reviews/Review';
 
 
 export const Detail = () => {
@@ -16,6 +17,7 @@ export const Detail = () => {
     const quantityInputRef = useRef(null); // Crear una referencia
     const { id } = useParams(); //recibimos el params id
     const productDetail = useSelector(state => state.productDetail);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getIdProduct(id));
@@ -27,12 +29,18 @@ export const Detail = () => {
         // setIsInCart(!!existingProduct);
     }, [dispatch, id])
 
-    const toggleCart = () => {
+
+    const toggleCart = async () => {
         if (isInCart) {
-            const products = JSON.parse(localStorage.getItem('cartProducts')) || [];
-            const updatedProducts = products.filter((p) => p.id !== productDetail.id);
-            localStorage.setItem('cartProducts', JSON.stringify(updatedProducts));
+            const resAlertCar = await alertConfirm('warning', 'Delete Product!', 'Do you want to remove this product from your Car?')
+            if (resAlertCar) {
+                alert("prueba si isInCart es true")
+                const products = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                const updatedProducts = products.filter((p) => p.id !== productDetail.id);
+                localStorage.setItem('cartProducts', JSON.stringify(updatedProducts));
+            }
         } else {
+            alert("prueba si isInCart es false")
             let quantity = parseInt(quantityInputRef.current.value);
             if (isNaN(quantity) || quantity < 1) {
                 quantity = 1;
@@ -87,14 +95,47 @@ export const Detail = () => {
                 console.log('Este producto ya está en el carrito.');
             }
         }
-        else {            
-            const resAlert = await alertConfirm('warning', 'Delete Product!','Do you want to remove this product from your wish list?')
-            if(resAlert){
+        else {
+            const resAlert = await alertConfirm('warning', 'Delete Product!', 'Do you want to remove this product from your wish list?')
+            if (resAlert) {
                 const updatedProducts = product.filter(p => p.id !== productDetail.id);
                 localStorage.setItem("whislist", JSON.stringify(updatedProducts));
                 setWhis(false)
             }
         }
+    }
+
+    const handleQuantity = (event) => {
+        const value = Number(event.target.value)
+        if (value > productDetail.stock) {
+            quantityInputRef.current.value = ""
+            alertAcept('error', 'Quantity Stock', '', `<p>value exceeds quantity in stock, Maximium Purchase: <b>${productDetail.stock}</b></p>`)
+        }
+    }
+
+    const handleBuyNow = (e) => {
+        let quantity = parseInt(quantityInputRef.current.value);
+        const products2 = JSON.parse(localStorage.getItem('cartProducts')) || [];
+        const existingProduct = products2.find((p) => p.id === productDetail.id);
+        const product = {
+            id: productDetail.id,
+            title: productDetail.name,
+            description: productDetail.description,
+            unit_price: productDetail.price,
+            quantity: quantity,
+            currency_id: 'USD',
+            picture_url: productDetail.image,
+        };
+
+        if (!existingProduct) {
+            products2.push(product);
+            console.log("existe",productDetail);
+            localStorage.setItem('cartProducts', JSON.stringify(products2));
+        } else {
+            console.log('Este producto ya está en el carrito.');
+        }
+
+        navigate('/cart');
     }
 
     return (
@@ -139,19 +180,38 @@ export const Detail = () => {
                         <div className={styled.continerInputAmount}>
                             <h4>Quantity</h4>
                             <input className={styled.inputQuantity}
+                                // value={value2}
                                 type="Number"
-                                placeholder="0"
+                                placeholder="1"
                                 ref={quantityInputRef}
-                                min="0"
+                                min="1"
                                 max={productDetail.stock}
+                                onChange={handleQuantity}
                             ></input>
                             <label>maximium purchase {productDetail.stock}</label>
                         </div>
                         <div className={styled.continerbuttonBuy}>
-                            <button className={styled.buttonBuy} >Buy Now</button>
+
+                            <button className={styled.buttonBuy}
+                                onClick={handleBuyNow}>
+                                Buy Now
+                            </button>
+
                         </div>
                         <div className={styled.continerbutton2}>
-                            <button className={styled.button2} onClick={toggleCart}><BsCart2 /> {isInCart ? "Delete from Cart" : "Add to Cart"}</button>
+                            {isInCart ?
+                                <button className={styled.button2}
+                                    onClick={toggleCart}>
+                                    <BsCart2 />
+                                    "Delete from Cart"
+                                </button>
+                                :
+                                <button className={styled.button2}
+                                    onClick={toggleCart}>
+                                    <BsCart2 />
+                                    "Add to Cart"
+                                </button>
+                            }
                             {!whis ?
                                 <button className={styled.button2}
                                     onClick={handleWhisList}>
@@ -170,8 +230,10 @@ export const Detail = () => {
                         </div>
                     </div>
                 </div>
+                <div className={styled.productReviews}>
+                  <Reviews productId={id} />
+                </div>
             </div>
-
         </div>
     );
-}
+};

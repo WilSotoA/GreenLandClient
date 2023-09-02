@@ -1,127 +1,138 @@
 .cart {
-    width: 100vw;
-    margin: 5vh 0 5vh 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  margin: 5vh 0 5vh 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cartContainer {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    width: 50%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 70%;
+  border: 1px solid #ddd;
+  overflow-y: scroll;
+}
+.cartContainer::-webkit-scrollbar {
+  width: 7px;
+}
+.cartContainer::-webkit-scrollbar-thumb {
+  background-color: var(--verdePrincipal);
+  border-radius: 10px;
 }
 
 .cartTitCon {
-    width: 20%;
+  width: 20%;
 }
 
 .cartLine button {
-    padding: 5px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: var(--verdePrincipal);
-    border-radius: 50%;
-    cursor: pointer;
-    margin: 0 20px;
-    width: 15%;
-    height: 15%;
+  padding: 5px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: var(--verdePrincipal);
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 20px;
+  width: 15%;
+  height: 15%;
 }
 
 .cartLine button:hover {
-    background-color: var(--verdeClaro);
+  background-color: var(--verdeClaro);
 }
 
 .cartLine > div {
-    display: flex;
-    align-items: center;
-}   
+  display: flex;
+  align-items: center;
+}
 
 .cartLine img {
-    max-width: 20%;
-    height: auto;
+  max-width: 20%;
+  height: auto;
 }
 
 .header {
-    font-size: 0.7vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4%;
+  font-size: 0.7vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4%;
 }
 
 .header h2 {
-    color: #bd1c32;
+  color: #bd1c32;
 }
 
 .header h2:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .cartLine {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 3% 2% 3%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 3% 2% 3%;
 }
 
 .totalPrice {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 15px;
-    border-top: 2px solid #B8B8B8; 
-    padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 15px;
+  border-top: 2px solid #b8b8b8;
+  padding-top: 20px;
 }
 
-.totalPrice button, .totalPrice a {
-    color: white;
-    text-decoration: none;
-    min-width: 15%;
-    padding: 7px 5px;
-    border-radius: 20px;
-    border-style: outset;
-    border-color: var(--verdeClaro);
-    background-color: var(--verdePrincipal);
+.totalPrice button,
+.totalPrice a {
+  color: white;
+  text-decoration: none;
+  min-width: 15%;
+  padding: 7px 5px;
+  border-radius: 20px;
+  border-style: outset;
+  border-color: var(--verdeClaro);
+  background-color: var(--verdePrincipal);
 }
 
-.totalPrice button:hover, .totalPrice a:hover{
-    background-color: var(--verdeClaro);
-    cursor: pointer;
+.totalPrice button:hover,
+.totalPrice a:hover {
+  background-color: var(--verdeClaro);
+  cursor: pointer;
 }
 
 .removeItem {
-    color: #bd1c32;
-    cursor: pointer;
-    margin-left: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: #bd1c32;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .removeItem:hover {
-    transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 .totalPrice:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 
 @media (max-width: 768px) {
-    .cartContainer {
-        width: 80%;
-        padding: 10px;
-    }
+  .cartContainer {
+    width: 80%;
+    padding: 10px;
+  }
 
-    .cartLine img {
-        max-width: 15%;
-        height: auto;
-    }
+  .cartLine img {
+    max-width: 15%;
+    height: auto;
+  }
 }

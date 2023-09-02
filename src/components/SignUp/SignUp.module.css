@@ -108,8 +108,29 @@
   margin-right: 100px;
 }
 
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
 .checkIcon {
   margin-right: 10px;
+}
+
+.password-assets {
+  width: 78px;
+  height: 8px;
+  flex-shrink: 0;
+  background: url(../../assets/passwordUser.jpg), lightgray 50% / cover no-repeat;
+}
+  
+
+.eye-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: url(../../assets/eyeUser.jpg), lightgray 50% / cover no-repeat;
 }
 
 .personalData {

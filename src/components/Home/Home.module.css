@@ -1,12 +1,9 @@
 .parent {
     display: grid;
     grid-template-columns: 4fr 8fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    padding: 4% 4% 2% 4%;
+    padding: 0.5rem 2rem;
+    gap: 2rem;
     height: auto;
-    margin: 0;
 }
 
 .div1 { 
@@ -70,8 +67,6 @@
         grid-template-areas: 
                             'div1'
                             'div2';
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
         padding: 0;
         justify-items: center;
         margin-bottom: 20px;

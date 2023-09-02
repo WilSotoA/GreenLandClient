@@ -30,7 +30,6 @@
 .left{
     display:flex;
     margin: 15px;
-    /* background-color: blue;     */
     align-content: center;
     justify-content: baseline;
     height: min-content;
@@ -38,13 +37,13 @@
 
 .center{
     display:flex;
+    flex-wrap: wrap;
     margin: 5px;
     align-content:center;
     align-items:flex-end;
     justify-content: center;
     width: 100%;
     height: min-content;
-    /* background-color: aqua; */
 }
 
 .links {

@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     height: auto;
+    margin: 1rem 0;
 }
 
 .globalCont h2 {
@@ -11,38 +12,58 @@
     font-size: 30px;
     color: var(--verdePrincipal);
     font-style: italic;
-    margin-bottom: 0;
+    margin: 1rem;
     justify-content: center;
     align-items: center;
     width: 50%;
+
+}
+
+.paragraph {
+    width: 70%;
+    margin: 0 auto;
+    padding: 1rem;
+    height: max-content;
+    display: flex;
+    line-height: 1.5rem;
 }
 
 hr {
+    width: 50%;
     border-color: var(--verdePrincipal);
     border-width: 2px;
     border-style: solid;
    
 }
 
-.globalCont div {
-   width: 50%;
-   text-align: justify;
+.globalCont section {
+    margin-top: 2rem;
+    width: 60%;
+    overflow: hidden;
+    padding: 2rem;
 }
 
 .cards{
+    width: 100%;
     display: grid;
-    grid-template-columns: 3fr 3fr 3fr;
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 30%), 1fr));
+    gap: 1rem;
     justify-items: center;
     align-items: center;
-    row-gap: 25px;
-    margin: 30px 25% 30px 25%;
     justify-content: center;
-    padding: 20px 50px 20px 50px;
     background-color: var(--verdeClaro);
     border-radius: 20px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
 
-hr{
-    width: 50%;
+.card {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
 }

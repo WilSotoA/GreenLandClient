@@ -1,30 +1,30 @@
-import style from "./ShoppingCart.module.css";
-import { BsFillTrash3Fill } from "react-icons/bs";
-import { useState } from "react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { alertConfirm } from "../SweetAlert/SweetAlert";
-import { Link } from "react-router-dom";
+import style from "./ShoppingCart.module.css"
+import { BsFillTrash3Fill } from "react-icons/bs"
+import { useState } from "react"
+import axios from "axios"
+import { useSelector } from "react-redux"
+import { alertConfirm } from "../SweetAlert/SweetAlert"
+import { Link } from "react-router-dom"
 
-const { VITE_SERVER_URL } = import.meta.env;
+const { VITE_SERVER_URL } = import.meta.env
 
 export const ShoppingCart = () => {
-  const authData = useSelector((state) => state.authData);
+  const authData = useSelector((state) => state.authData)
   const [paymentData, setPaymentData] = useState({
-    userId: authData?.id || null, //!DEBO traer el id del user ME falta
+    userId: authData?.id || null,
     products: JSON.parse(localStorage.getItem("cartProducts")) || [],
-  });
+  })
   const shopping = async () => {
     try {
       const { data } = await axios.post(
         `${VITE_SERVER_URL}/orders`,
         paymentData
-      );
-      window.location.href = data;
+      )
+      window.location.href = data
     } catch (error) {
-      alert("error: " + error);
+      alert("error: " + error)
     }
-  };
+  }
 
   const handleQuantityChange = (productId, action) => {
     const updatedProducts = paymentData.products.map((product) => {
@@ -32,18 +32,18 @@ export const ShoppingCart = () => {
         const newQuantity =
           action === "add"
             ? product.quantity + 1
-            : Math.max(product.quantity - 1, 1);
-        return { ...product, quantity: newQuantity };
+            : Math.max(product.quantity - 1, 1)
+        return { ...product, quantity: newQuantity }
       }
-      return product;
-    });
-  
+      return product
+    })
+
     setPaymentData((prevData) => ({
       ...prevData,
       products: updatedProducts,
-    }));
-    localStorage.setItem("cartProducts", JSON.stringify(updatedProducts));
-  };
+    }))
+    localStorage.setItem("cartProducts", JSON.stringify(updatedProducts))
+  }
 
   const handleRemoveItem = async (productId) => {
     try {
@@ -51,21 +51,21 @@ export const ShoppingCart = () => {
         "warning",
         "Delete product!",
         "Are you sure you want to remove this product?"
-      );
+      )
       if (alert) {
         const updatedProducts = paymentData.products.filter(
           (product) => product.id !== productId
-        );
+        )
         setPaymentData((prevData) => ({
           ...prevData,
           products: updatedProducts,
-        }));
-        localStorage.setItem("cartProducts", JSON.stringify(updatedProducts));
+        }))
+        localStorage.setItem("cartProducts", JSON.stringify(updatedProducts))
       }
     } catch (error) {
-      console.error(error.message);
+      console.error(error.message)
     }
-  };
+  }
 
   const handleRemoveAll = async () => {
     try {
@@ -73,18 +73,18 @@ export const ShoppingCart = () => {
         "warning",
         "Delete all product!",
         "Are you sure you want to remove all products?"
-      );
+      )
       if (alert) {
         setPaymentData((prevData) => ({
           ...prevData,
           products: [],
-        }));
-        localStorage.removeItem("cartProducts");
+        }))
+        localStorage.removeItem("cartProducts")
       }
     } catch (error) {
-      console.error(error.message);
+      console.error(error.message)
     }
-  };
+  }
 
   return (
     <div className={style.cart}>
@@ -141,5 +141,5 @@ export const ShoppingCart = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

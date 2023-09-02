@@ -4,6 +4,7 @@ import style from "./SignUp.module.css";
 import axios from "axios";
 import { alertAcept } from "../SweetAlert/SweetAlert";
 import loader from "../../assets/loaderGif.gif";
+
 import { useSelector } from "react-redux";
 
 const { VITE_SERVER_URL } = import.meta.env;
@@ -22,9 +23,9 @@ export const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(()=> {
-    if (auth) navigate('/home');
-  }, [auth, navigate])
+  useEffect(() => {
+    if (auth) navigate("/home");
+  }, [auth, navigate]);
 
   const regExEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
   const regexPassword =
@@ -86,7 +87,11 @@ export const SignUp = () => {
     event.preventDefault();
 
     if (name.length < 4 || /[^a-zA-Z\s]/.test(name)) {
-      alertAcept("error", "Ops, Error!", "Please enter a valid name with at least 4 letters and no special characters.");
+      alertAcept(
+        "error",
+        "Ops, Error!",
+        "Please enter a valid name with at least 4 letters and no special characters."
+      );
       return;
     }
 
@@ -96,8 +101,12 @@ export const SignUp = () => {
     }
 
     if (!regexPassword.test(password)) {
-      alertAcept("error", "Ops, Error!", "Password must be between 6 and 10 characters and contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
-      
+      alertAcept(
+        "error",
+        "Ops, Error!",
+        "Password must be between 6 and 10 characters and contain at least one lowercase letter, one uppercase letter, one number, and one special character."
+      );
+
       return;
     }
 
@@ -107,7 +116,11 @@ export const SignUp = () => {
     }
 
     if (!agreeToDataProcessing) {
-      alertAcept("error", "Ops, Error!", "Please agree to the processing of personal data.");
+      alertAcept(
+        "error",
+        "Ops, Error!",
+        "Please agree to the processing of personal data."
+      );
       return;
     }
     try {
@@ -132,7 +145,7 @@ export const SignUp = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.log(error.response?.data?.error || error.message);
+      console.error(error.response?.data?.error || error.message);
       alertAcept(
         "error",
         "User not created!",
@@ -200,9 +213,9 @@ export const SignUp = () => {
           <label className={style.formLabel}>Password:</label>
           <input
             type="password"
+            className={style.formInput}
             value={password}
             onChange={handleChangePassword}
-            className={style.formInput}
           />
           {passwordError && (
             <span className={style.errorText}>

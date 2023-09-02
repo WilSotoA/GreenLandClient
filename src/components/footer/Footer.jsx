@@ -5,7 +5,7 @@ import image from "../../assets/index"
 export const Footer = () => {
 
     return (
-        <div className={styled.container}>
+        <footer className={styled.container}>
             {/* <div className={styled.grupo1}>
                 <img className={styled.logo_greenland} src={image.logo_greenland} alt="logo" />
             </div> */}
@@ -34,7 +34,7 @@ export const Footer = () => {
                     </Link>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 

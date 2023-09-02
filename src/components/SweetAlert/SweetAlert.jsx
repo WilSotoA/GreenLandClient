@@ -2,7 +2,7 @@ import Swal from 'sweetalert2'
 import styled from '../SweetAlert/SweetAlert.module.css'
 
 // background: 'var(--verdePrincipal)'
-export const alertConfirm = (icon, title, text,html,footer) => {
+export const alertConfirm = (icon, title, text, html, footer) => {
 
     return (
         Swal.fire({
@@ -10,7 +10,7 @@ export const alertConfirm = (icon, title, text,html,footer) => {
             title: title, // nombre del titulo 'warning!',
             text: text, // nombre del contenido 'you want to remove the product from your wish list',
             html: html,
-            footer:footer,
+            footer: footer,
             color: 'black',
             iconColor: 'green',
             background: 'var(--verdeClaro)',
@@ -23,9 +23,9 @@ export const alertConfirm = (icon, title, text,html,footer) => {
             allowEscapeKey: true,
             allowEnterKey: true,
             stopKeydownPropagation: false,
-            
-            customClass:{
-                popup:'popupClass'
+
+            customClass: {
+                popup: 'popupClass'
             },
         })
             .then(res => {
@@ -34,7 +34,7 @@ export const alertConfirm = (icon, title, text,html,footer) => {
     )
 }
 
-export const alertAcept = (icon, title, text,html,footer) => {
+export const alertAcept = (icon, title, text, html, footer) => {
 
     return (
         Swal.fire({
@@ -42,7 +42,7 @@ export const alertAcept = (icon, title, text,html,footer) => {
             title: title, // nombre del titulo 'warning!',
             text: text, // nombre del contenido 'you want to remove the product from your wish list',
             html: html,
-            footer:footer,
+            footer: footer,
             color: 'black',
             iconColor: 'green',
             background: 'var(--verdeClaro)',

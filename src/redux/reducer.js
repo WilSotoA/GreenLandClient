@@ -1,17 +1,18 @@
+import { authData } from "./action";
 import {
     PREV, NEXT, GET_ALL_PRODUCTS, GET_ALL_CATEGORIES, APPLY_FILTERS, GET_ID_DETAIL,
-    NUM_PAGE, GET_ALL_REVIEWS, GET_WHISLIST, DEL_WHISLIST, AUTH, LOGOUT
+    NUM_PAGE, GET_ALL_REVIEWS, GET_WHISLIST, DEL_WHISLIST, AUTH, LOGOUT, GET_ORDERS_PER_USER, GET_ALL_ORDERS, GET_DETAIL_ORDERS
 } from "./actionType";
 
 const initialState = {
-    authData: null,
-    numPageState: 1,
-    allProducts: [],
-    allCategories: [],
-    allReviews: [],
-    filterProducts: [],
-    productDetail: [],
-    whisListState: [],
+    authData       : null,
+    numPageState   : 1,
+    allProducts    : [],
+    allCategories  : [],
+    allReviews     : [],
+    filterProducts : [],
+    productDetail  : [],
+    whisListState  : [],
 };
 
 export default function reducer(state = initialState, { type, payload }) {
@@ -87,6 +88,33 @@ export default function reducer(state = initialState, { type, payload }) {
             return {
                 ...state,
                 authData: null
+            }
+        
+        case GET_ORDERS_PER_USER:
+            return {
+                ...state,
+                authData: {
+                    ...state.authData,
+                    orders: payload
+                }
+            }
+
+        case GET_DETAIL_ORDERS:
+            return {
+                ...state,
+                authData: {
+                    ...state.authData,
+                    allOrders: payload
+                }
+            }
+
+        case GET_ALL_ORDERS:
+            return {
+                ...state,
+                authData: {
+                    ...state.authData,
+                    allOrders: payload
+                }
             }
 
         default: return { ...state };

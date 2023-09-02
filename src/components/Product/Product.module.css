@@ -24,33 +24,33 @@
     clip-path: polygon(0 15%, 100% 16%, 100% 66%, 0 80%);
 }
 
-.prodCont > h2, h3, p {
+.prodCont h2, .prodCont h3, .prodCont p {
     margin: 0;
     position: absolute;
     text-align: center;
 }
 
-.prodCont > h2 {
+.prodCont h2 {
     font-size: 20px;    
     text-transform: uppercase;
     top: 50%;
     font-family: 'Acme', sans-serif;
 }
 
-.prodCont > p {
+.prodCont p {
     font-size: 20px;    
     bottom: 15%;
     width: 100%;
 }
 
-.prodCont > h3 {
+.prodCont h3 {
     font-family: 'Satisfy', cursive;
     font-size: 0.8em;
     top: 65%;
 }
 
-.prodCont > p::before,
-.prodCont > p::after {
+.prodCont p::before,
+.prodCont p::after {
     content: '';
     height: 1px;
     width: 40px;
@@ -60,11 +60,11 @@
     top: 50%;
 }
 
-.prodCont > p::before {
+.prodCont p::before {
     left: 24px;
 }
   
-.prodCont > p::after {
+.prodCont p::after {
     right: 24px;
 }
 

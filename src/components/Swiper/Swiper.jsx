@@ -5,72 +5,72 @@ import { NavLink } from "react-router-dom";
 
 //lo saque de aqui https://codesandbox.io/s/ecstatic-curran-cr2g90?file=/src/App.js&resolutionWidth=748&resolutionHeight=675
 export const SimpleSlider = () => {
-    const allProducts = useSelector((state) => state.allProducts);
-    
-    const settings = {
-      className: "center",
-      centerMode: true,
-      infinite: true,
-      centerPadding: "10px",
-      slidesToShow: 3,
-      speed: 2000,
-      autoplay: true,
-      autoplaySpeed: 4000,
-      responsive: [
-        {
-          breakpoint: 740, // Cambiar el número aquí según el punto de quiebre deseado
-          settings: {
-            slidesToShow: 1
-          }
-        },
-        {
-          breakpoint: 480, // Cambiar el número aquí según el punto de quiebre deseado
-          settings: {
-            slidesToShow: 1
-          }
-        },
-        {
-          breakpoint: 1630, // Puedes agregar más puntos de quiebre según sea necesario
-          settings: {
-            slidesToShow: 3
-          }
+  const allProducts = useSelector((state) => state.allProducts);
+
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "10px",
+    slidesToShow: 3,
+    speed: 2000,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    responsive: [
+      {
+        breakpoint: 740, // Cambiar el número aquí según el punto de quiebre deseado
+        settings: {
+          slidesToShow: 1
         }
-      ]
-    };
-    
-    return (
-      <div className="container">
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charSet="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-        <style>{cssstyle}</style>
-        <h2>New Arrivals</h2>
-        <Slider {...settings}>
-          {allProducts.map((product, index) => (
-            <div key={index}>
+      },
+      {
+        breakpoint: 480, // Cambiar el número aquí según el punto de quiebre deseado
+        settings: {
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 1630, // Puedes agregar más puntos de quiebre según sea necesario
+        settings: {
+          slidesToShow: 3
+        }
+      }
+    ]
+  };
+
+  return (
+    <div className="container">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        charSet="UTF-8"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
+      <style>{cssstyle}</style>
+      <h2>New Arrivals</h2>
+      <Slider {...settings}>
+        {allProducts.map((product, index) => (
+          <div key={index}>
+            <NavLink to={`/detail/${product.id}`}>
               <h3>
                 <img
-                    src={product.image}
-                    alt={`Imagen ${index + 1}`}
-                    style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }} 
+                  src={product.image}
+                  alt={`Imagen ${index + 1}`}
+                  style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
                 />
-                <NavLink to={`/detail/${product.id}`}>
-                    <div className="link"><p>{product.name}</p></div>
-                </NavLink>
+                <div className="link"><p>{product.name}</p></div>
               </h3>
-            </div>
-          ))}
-        </Slider>
-      </div>
-    );
+            </NavLink>
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };
 
 const cssstyle = `

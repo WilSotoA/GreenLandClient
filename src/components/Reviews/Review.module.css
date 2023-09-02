@@ -1,0 +1,117 @@
+.reviewsContainer {
+    margin-top: 20px;
+  }
+  
+  .reviewsContainerH2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .userName {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--verdePrincipal);
+  }
+  
+  .reviewsContainerA {
+    color: var(--verdePrincipal);
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  
+  .reviewItem {
+    margin-bottom: 20px;
+  }
+
+  .linkReviews {
+    text-decoration: none;
+    color: var(--verdePrincipal);
+  }
+  
+  .deleteButton {
+    color: var(--verdePrincipal);
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .deleteButton:hover {
+    text-decoration: underline;
+  }
+  
+  .starIcons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .starIcons span {
+    cursor: pointer;
+  }
+  
+  .starIcons svg {
+    width: 16px;
+    height: 16px;
+    fill: blue;
+    margin-right: 4px;
+  }
+  
+  .reviewForm {
+    margin-top: 20px;
+  }
+  
+  .reviewForm h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .reviewForm .successMessage {
+    color: var(--verdePrincipal);
+    margin-bottom: 10px;
+  }
+  
+  .reviewForm .errorMessage {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  .reviewFormTextarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--verdePrincipal);
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .reviewFormButton {
+    background-color: var(--verdePrincipal);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reviewForm button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .buttonDelete{
+    border: 1px solid var(--verdePrincipal);
+    background-color: white;
+    color: black;
+}
+
+.starIconsSvgFilled {
+  fill: blue;
+}
+
+.starIconsSvgHalf {
+  fill: blue;
+}
+
+.starIconsSvgEmpty {
+  fill: blue;
+}

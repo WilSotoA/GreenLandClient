@@ -1,0 +1,39 @@
+
+.MuiTableRow-root > * {
+    padding: 10px;
+  }
+  
+  .head > * {
+    font-weight: bold !important;
+  }
+  
+  
+  .Table:first-child {
+    border-radius: 0.7rem !important;
+  }
+  .status {
+    padding: 8px;
+    border-radius: 9px;
+  }
+  
+  .Table h3{
+    margin-bottom: 20px !important;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .Table {
+      width: 170%;
+      margin-top: 2rem;
+    }
+  }
+  
+  
+  @media screen and (max-width: 768px) {
+    .Table{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 23rem;
+    }
+  }

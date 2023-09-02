@@ -1,0 +1,40 @@
+.MainDash {
+    display: grid;
+    background: rgba(255, 255, 255, 0.54);
+    border-radius: 2rem;
+    gap: 16px;
+    grid-template-columns: 1fr 20rem; 
+    overflow: hidden;
+  }
+  
+  .mainDashCompMiddle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; 
+    max-height: 87%;
+    padding: 1rem; 
+  }
+  
+  .mainDashCompRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; 
+    max-height: 87%;
+    padding: 1rem;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .MainDash {
+      justify-content: flex-start;
+      margin-top: 2rem;
+      grid-template-columns: 1fr; 
+      overflow-y: scroll;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .MainDash {
+      align-items: center;
+      grid-template-columns: 1fr; 
+    }
+  }

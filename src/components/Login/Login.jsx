@@ -1,9 +1,13 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
 import axios from "axios";
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
-import {FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { authData } from "../../redux/action";
 import { alertAcept } from "../SweetAlert/SweetAlert";
@@ -11,58 +15,61 @@ import loader from "../../assets/loaderGif.gif";
 
 const { VITE_SERVER_URL, VITE_FB_APP_ID, VITE_GG_APP_ID } = import.meta.env;
 
+
 export const Login = () => {
-  const auth = useSelector((state) => state.authData);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const auth = useSelector((state) => state.authData)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  useEffect(()=> {
-    if (auth) navigate('/home');
-  }, [auth, navigate])
+  useEffect(() => {
 
-  const regExEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (auth) navigate("/home");
+  }, [auth, navigate]);
+
+
+  const regExEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,10}/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,10}/
 
   const handleChangeEmail = (event) => {
-    const value = event.target.value;
-    setEmail(value);
+    const value = event.target.value
+    setEmail(value)
 
     if (!regExEmail.test(value)) {
-      setEmailError(true);
+      setEmailError(true)
     } else {
-      setEmailError(false);
+      setEmailError(false)
     }
-  };
+  }
 
   const handleChangePassword = (event) => {
-    const value = event.target.value;
-    setPassword(value);
+    const value = event.target.value
+    setPassword(value)
 
     if (!regexPassword.test(value)) {
-      setPasswordError(true);
+      setPasswordError(true)
     } else {
-      setPasswordError(false);
+      setPasswordError(false)
     }
-  };
+  }
 
   const handleChangeRememberMe = () => {
-    setRememberMe(!rememberMe);
-  };
+    setRememberMe(!rememberMe)
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (!regExEmail.test(email)) {
-      alertAcept("error", "Ops, Error!", "Please enter a valid email address.");
-      return;
+      alertAcept("error", "Ops, Error!", "Please enter a valid email address.")
+      return
     }
 
     if (!regexPassword.test(password)) {
@@ -70,14 +77,14 @@ export const Login = () => {
         "error",
         "Ops, Error!",
         "Password must be between 6 and 10 characters and contain at least one lowercase letter, one uppercase letter, one number, and one special character."
-      );
-      return;
+      )
+      return
     }
 
     //enviar credenciales al servidor para autenticación
     if (email && password) {
       // enviar solicitud al servidor para autenticación
-      setLoading(true);
+      setLoading(true)
       axios
         .post(`${VITE_SERVER_URL}/users/login`, {
           email: email,
@@ -85,36 +92,37 @@ export const Login = () => {
         })
         .then((res) => {
           // Manejo la respuesta del servidor, como almacenar los datos del usuario en el estado o redirigir a otra página
-          setLoading(false);
-          dispatch(authData(res.data));
-          navigate("/home");
+          setLoading(false)
+          dispatch(authData(res.data))
+          navigate("/home")
         })
         .catch((error) => {
           // Manejo los errores de la solicitud al servidor
-          setLoading(false);
+          setLoading(false)
           alertAcept(
             "error",
             "User not created!",
             error.response?.data?.error || error.message
-          );
-          console.error(error);
-        });
+          )
+          console.error(error)
+        })
     }
-  };
+  }
 
   const handleSignUpOnClick = () => {
-    navigate("/signup");
-  };
+    navigate("/signup")
+  }
 
   const handleThirdAuth = async ({ provider, data }) => {
+
     let picture = "";
-    console.log(data);
+
     if (provider === "facebook") {
       //Facebook
-      picture = data.picture?.data?.url;
+      picture = data.picture?.data?.url
     } else if (provider === "google") {
       //Google
-      picture = data.picture;
+      picture = data.picture
     }
 
     const user = {
@@ -122,29 +130,29 @@ export const Login = () => {
       email: data.email,
       picture: picture,
       origin: provider,
-    };
+    }
 
     try {
-      setLoading(true);
+      setLoading(true)
       const response = await axios.post(
         `${VITE_SERVER_URL}/users/loginThird`,
         user
-      );
+      )
       if (response.data) {
-        setLoading(false);
-        dispatch(authData(response.data));
-        navigate("/home");
-      } else alert("Couldn't login");
+        setLoading(false)
+        dispatch(authData(response.data))
+        navigate("/home")
+      } else alert("Couldn't login")
     } catch (error) {
-      setLoading(false);
-      console.error(error?.message);
+      setLoading(false)
+      console.error(error?.message)
       alertAcept(
         "error",
         "User not created!",
         error.response?.data?.error || error.message
-      );
+      )
     }
-  };
+  }
 
   return (
     <div className={`${style.login} ${style.greenText}`}>
@@ -227,7 +235,9 @@ export const Login = () => {
           onLoginStart={() => console.log("started login")}
           onResolve={handleThirdAuth}
           onReject={(err) => {
-            console.log(err);
+
+            console.error(err);
+
           }}
         >
           <FacebookLoginButton />
@@ -239,7 +249,9 @@ export const Login = () => {
           onLoginStart={() => console.log("started login")}
           onResolve={handleThirdAuth}
           onReject={(err) => {
-            console.log(err);
+
+            console.error(err);
+
           }}
         >
           <GoogleLoginButton />
@@ -254,5 +266,5 @@ export const Login = () => {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}

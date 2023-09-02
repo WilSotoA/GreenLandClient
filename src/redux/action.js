@@ -1,7 +1,9 @@
 import axios from 'axios';
 const { VITE_SERVER_URL } = import.meta.env;
-import { PREV, NEXT, GET_ALL_PRODUCTS, GET_ALL_CATEGORIES, APPLY_FILTERS, GET_ID_DETAIL, NUM_PAGE,
-     GET_ALL_REVIEWS, GET_WHISLIST,DEL_WHISLIST, AUTH, LOGOUT } from "./actionType";
+import {
+    PREV, NEXT, GET_ALL_PRODUCTS, GET_ALL_CATEGORIES, APPLY_FILTERS, GET_ID_DETAIL, NUM_PAGE,
+    GET_ALL_REVIEWS, GET_WHISLIST, DEL_WHISLIST, AUTH, LOGOUT, GET_ORDERS_PER_USER, GET_ALL_ORDERS, GET_DETAIL_ORDERS
+} from "./actionType";
 
 export const paginatePrev = () => {
     return {
@@ -60,7 +62,7 @@ export const applyFilters = (filters) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.post(`${VITE_SERVER_URL}/filters`, filters);
-            dispatch({type : APPLY_FILTERS, payload: data})
+            dispatch({ type: APPLY_FILTERS, payload: data })
         } catch (error) {
             alert("error: " + error)
         }
@@ -87,7 +89,6 @@ export const getWhisList = (id) => {
         try {
             const dataId = await axios.get(`${VITE_SERVER_URL}/products/${id}`);
             const pruductDetail = dataId.data;
-            // console.log("esta es la data JSON=====>",pruductDetail);
             dispatch({
                 type: GET_WHISLIST,
                 payload: pruductDetail,
@@ -98,12 +99,68 @@ export const getWhisList = (id) => {
         }
     };
 }
+
 export const deleteWhisList = (id) => {
     return {
-                type: DEL_WHISLIST,
-                payload: id
-        }
+        type: DEL_WHISLIST,
+        payload: id
+    }
 }
+
+export const getOrdersPerUser = (userId) => {
+    return async function (dispatch) {
+        try {
+            const token = JSON.parse(localStorage.getItem('profile'))?.token
+            const { data } = await axios.get(`${VITE_SERVER_URL}/orders/user/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+            );
+            dispatch({ type: GET_ORDERS_PER_USER, payload: data });
+        }
+        catch (error) {
+            alert("error: " + error.response.data.error)
+        }
+    };
+}
+
+export const getAllOrders = () => {
+    return async function (dispatch) {
+        try {
+            const token = JSON.parse(localStorage.getItem('profile'))?.token
+            const { data } = await axios.get(`${VITE_SERVER_URL}/orders/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+            );
+            dispatch({ type: GET_ALL_ORDERS, payload: data });
+        }
+        catch (error) {
+            alert("error: " + error.response.data.error)
+        }
+    };
+}
+
+export const getDetailOrders = (orderId) => {
+    return async function (dispatch) {
+        try {
+            const token = JSON.parse(localStorage.getItem('profile'))?.token
+            const { data } = await axios.get(`${VITE_SERVER_URL}/orders/${orderId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+            );
+            dispatch({ type: GET_DETAIL_ORDERS, payload: data });
+        }
+        catch (error) {
+            alert("error: " + error.response.data.error)
+        }
+    };
+}
+
 export const authData = (profile) => {
     return {
         type: AUTH,
