@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import styles from "./Review.module.css";
 const { VITE_SERVER_URL } = import.meta.env;
 import { alertConfirm, alertAcept } from "../SweetAlert/SweetAlert";
 import { useSelector } from "react-redux";
+
 
 const Reviews = () => {
   const auth = useSelector((state) => state.authData);
@@ -99,11 +99,11 @@ const Reviews = () => {
   };
 
   const handleDeleteReview = async (reviewId) => {
-    if (auth && (auth.id === review.userId || auth.isAdmin)) {
+    if (auth && (auth.id === reviewId || auth.id === 1)) {
     try {
       const confirmed = await alertConfirm(
         "warning",
-        "Delete product!",
+        "Delete review!",
         "Are you sure you want to delete the review?"
       );
       if (confirmed) {
@@ -124,6 +124,17 @@ const Reviews = () => {
     }
    }
   };
+
+  if (reviews.length === 0) {
+    return (
+      <div className={styles.reviewsContainer}>
+        <h2 className={styles.reviewsContainerH2}>Reviews</h2>
+        <Link to={`/reviews/${id}`} className={styles.linkReviews}>
+        This product has no reviews yet...
+        </Link>
+      </div>
+    );
+  }
 
   /*Lógica de comparación de id del user y id del producto para validar la compra, de ser asi puede crear la reseña. 
 Asi mismo en el renderizado un condicional para que pueda eliminar la reseña el usuario que la creó o el admin, tambíen 
@@ -156,7 +167,7 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
             </div>
           </div>
           <p>{review.message}</p>
-          {(auth && (authData.id === review.userId || authData.isAdmin)) && (
+          {(auth && (auth.id === review.userId || auth.id === 1)) && (
             <button
               className={styles.deleteButton}
               onClick={() => handleDeleteReview(review.id)}
@@ -181,17 +192,18 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
   
       <textarea
         className={styles.reviewFormTextarea}
-        placeholder="Write your review..."
+        placeholder="Write your review......"
         value={message}
         onChange={handleMessageChange}
+        disabled={!hasPurchased}
       ></textarea>
   
       <button className={styles.reviewFormButton} onClick={handleSubmitReview}>
         Submit Review
       </button>
+      {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
     </div>
   );
 };
 export default Reviews;
-
-

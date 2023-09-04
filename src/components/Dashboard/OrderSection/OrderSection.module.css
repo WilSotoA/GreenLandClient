@@ -4,7 +4,10 @@
     flex-direction: column;
     justify-content: space-evenly;
     max-height: 95%;
-    
+    overflow: auto;
+}
+.searchBar {
+  width: 50%; 
 }
 
 .Table{
@@ -12,6 +15,9 @@
     border: 1px solid #ddd;
     overflow-y: scroll;
     
+}
+.rowHeight{
+  height: 90px;
 }
 .Table::-webkit-scrollbar{
     width: 7px;
@@ -50,7 +56,6 @@
   }
   @media screen and (max-width: 1200px) {
     .Table {
-      width: 80%;
       margin-top: 2rem;
     }
   }
@@ -62,6 +67,5 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 23rem;
     }
   }

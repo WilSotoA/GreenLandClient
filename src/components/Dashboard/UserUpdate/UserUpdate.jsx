@@ -1,41 +1,43 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { BsFillBagCheckFill } from "react-icons/bs"
 import { PiUserCircleFill } from "react-icons/pi"
 import { RiLockPasswordFill } from "react-icons/ri"
 import { FaUserCog } from "react-icons/fa"
-import { authData, getOrdersPerUser } from "../../redux/action"
+import { authData, getOrdersPerUser } from "../../../redux/action"
 import { MdOutlineError } from "react-icons/md"
-import { alertAcept } from "../SweetAlert/SweetAlert"
+import { alertAcept } from "../../SweetAlert/SweetAlert"
 import axios from "axios"
-import style from "./UserProfile.module.css"
-import loader from "../../assets/loaderGif.gif"
+import style from "./UserUpdate.module.css"
+import loader from "../../../assets/loaderGif.gif"
 import countries from "countries-list"
 import Validation from "./Validation"
 import ValidationPass from "./ValidationPass"
 const { VITE_SERVER_URL } = import.meta.env
 
-export const UserProfile = () => {
+export const UserUpdate = ({ row }) => {
   const dispatch = useDispatch()
   const profile = JSON.parse(localStorage.getItem("profile")) || []
+
   const auth = useSelector((state) => state.authData)
   const [loading, setLoading] = useState(false)
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const [errors, setErrors] = useState({})
   const [errorsPass, setErrorsPass] = useState({})
   const [formData, setFormData] = useState({
-    name: profile?.user?.name || "",
-    genre: profile?.user?.genre || "None",
-    birth_date: profile?.user?.birth_date || Date(),
-    phone_number: profile?.user?.phone_number || "",
-    country: profile?.user?.country || "None",
-    address: profile?.user?.address || "",
+    name: row.name || "",
+    genre: row.genre || "None",
+    birth_date: row.birth_date || Date(),
+    phone_number: row.phone_number || "",
+    country: row.country || "None",
+    address: row.address || "",
     image: null,
   })
+  
   const [password, setPassword] = useState({
     newPassword: null,
     confirmNewPassword: null,
   })
+  
   const tabs = [
     { name: "Account Profile", icon: <FaUserCog /> },
     // { name: "Order History", icon: <BsFillBagCheckFill /> },
@@ -47,7 +49,7 @@ export const UserProfile = () => {
       {countries.countries[countryCode].name}
     </option>
   ))
-
+  
   const capitalizeWords = (string) => {
     return string
       .toLowerCase()
@@ -55,7 +57,7 @@ export const UserProfile = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ")
   }
-
+  
   const handleInputs = (event) => {
     const { name, value, files } = event.target
     if (String(name) !== "image") {
@@ -108,7 +110,7 @@ export const UserProfile = () => {
 
     try {
       const { data } = await axios.patch(
-        `${VITE_SERVER_URL}/users/${auth.id}`,
+        `${VITE_SERVER_URL}/users/${row.id}`,
         combinedFormData,
         {
           headers: {
@@ -135,9 +137,9 @@ export const UserProfile = () => {
         },
       }
 
-      localStorage.setItem("profile", JSON.stringify(newProfileAuth))
-      dispatch(authData(newProfileAuth))
-      alertAcept("great", "Changes Updated Successfully!")
+      // localStorage.setItem("profile", JSON.stringify(newProfileAuth))
+      // dispatch(authData(newProfileAuth))
+      alertAcept("success","Update User", "Changes Updated Successfully!")
     } catch (error) {
       setLoading(false)
       alertAcept(
@@ -191,8 +193,9 @@ export const UserProfile = () => {
   const tabContents = [
     <div className={style.userInfoGrid}>
       <div className={style.userPhotoCont}>
-        {auth?.image ? (
+        {row.image ? (
           <>
+            {/* revisado */}
             <div className={style.photoContainer}>
               <img src={auth.image} alt="userPhoto" />
               <div className={style.overlay}>
@@ -203,8 +206,8 @@ export const UserProfile = () => {
         ) : (
           <PiUserCircleFill size={100} />
         )}
-        <h1>{auth?.name && capitalizeWords(auth?.name)}</h1>
-        <h2>{auth?.email}</h2>
+        <h1>{row.name && capitalizeWords(row.name)}</h1>
+        <h2>{row.email}</h2>
       </div>
       <div className={style.userDetailCont}>
         <form className={style.forms} onSubmit={handleSubmit}>
@@ -319,35 +322,35 @@ export const UserProfile = () => {
         </form>
       </div>
     </div>,
-    <div className={style.orderContainer}>
-      {auth?.orders?.length > 0 ? (
-        auth.orders.map((order) => (
-          <div className={style.orderRowContainer} key={order.id}>
-            <div className={style.orderRow}>
-              <h1>Order ID</h1>
-              <h2>{order.id.toString().padStart(8, "0")}</h2>
-            </div>
+    // <div className={style.orderContainer}>
+    //   {auth?.orders?.length > 0 ? (
+    //     auth.orders.map((order) => (
+    //       <div className={style.orderRowContainer} key={order.id}>
+    //         <div className={style.orderRow}>
+    //           <h1>Order ID</h1>
+    //           <h2>{order.id.toString().padStart(8, "0")}</h2>
+    //         </div>
 
-            <div className={style.orderRow}>
-              <h1>Date</h1>
-              <h2>{order.date}</h2>
-            </div>
+    //         <div className={style.orderRow}>
+    //           <h1>Date</h1>
+    //           <h2>{order.date}</h2>
+    //         </div>
 
-            <div className={style.orderRow}>
-              <h1>Total Price</h1>
-              <h2>${order.totalPrice}</h2>
-            </div>
+    //         <div className={style.orderRow}>
+    //           <h1>Total Price</h1>
+    //           <h2>${order.totalPrice}</h2>
+    //         </div>
 
-            <div className={style.orderRow}>
-              <h1>Status Order</h1>
-              <h2>{order.status}</h2>
-            </div>
-          </div>
-        ))
-      ) : (
-        <span>You haven't made any purchases yet.</span>
-      )}
-    </div>,
+    //         <div className={style.orderRow}>
+    //           <h1>Status Order</h1>
+    //           <h2>{order.status}</h2>
+    //         </div>
+    //       </div>
+    //     ))
+    //   ) : (
+    //     <span>You haven't made any purchases yet.</span>
+    //   )}
+    // </div>,
     <div className={style.passwordContainer}>
       <form className={style.formPassword} onSubmit={handleSubmitPass}>
         <div className={style.input}>
@@ -387,15 +390,6 @@ export const UserProfile = () => {
     </div>,
   ]
 
-  useEffect(() => {
-    dispatch(getOrdersPerUser(profile?.user?.id))
-    setErrors(
-      Validation({
-        ...formData,
-      })
-    )
-  }, [dispatch])
-
   return (
     <>
       {loading ? (
@@ -405,15 +399,13 @@ export const UserProfile = () => {
           <ul className={style.tabContainer} role="tablist">
             {tabs.map((tab, index) => (
               <li
-                className={`${style.tab} ${
-                  activeTabIndex === index ? style.tabActive : ""
-                }`}
+                className={`${style.tab} ${activeTabIndex === index ? style.tabActive : ""
+                  }`}
                 key={index}
               >
                 <a
-                  className={`${style.link} ${
-                    activeTabIndex === index ? style.linkActive : ""
-                  }`}
+                  className={`${style.link} ${activeTabIndex === index ? style.linkActive : ""
+                    }`}
                   onClick={() => handleTabClick(index)}
                 >
                   {tab.icon}

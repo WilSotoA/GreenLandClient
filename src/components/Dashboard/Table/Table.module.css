@@ -7,7 +7,11 @@
     font-weight: bold !important;
   }
   
-  
+  .Table {
+    /* height: 100%; */
+    width: 100%;
+    overflow-y: scroll;
+  }
   .Table:first-child {
     border-radius: 0.7rem !important;
   }
@@ -22,7 +26,6 @@
   
   @media screen and (max-width: 1200px) {
     .Table {
-      width: 170%;
       margin-top: 2rem;
     }
   }
@@ -34,6 +37,5 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 23rem;
     }
   }

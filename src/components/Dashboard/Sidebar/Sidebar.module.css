@@ -3,6 +3,7 @@
     flex-direction: column;
     position: relative;
     padding-top: 4rem;
+    height: 92vh;
     transition: all 300ms ease;
   }
 

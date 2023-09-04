@@ -32,7 +32,7 @@ export const Sidebar = () => {
        <div className={style.bars} style={expanded?{left: '60%'}:{left: '5%'}} onClick={()=>setExpaned(!expanded)}>
         <UilBars />
       </div>
-    <motion.div className={style.sidebar}
+    <motion.aside className={style.sidebar}
     variants={sidebarVariants}
     animate={window.innerWidth<=768?`${expanded}`:''}
     >
@@ -88,7 +88,7 @@ export const Sidebar = () => {
           </NavLink>
         
       </div>
-      </motion.div>
+      </motion.aside>
     </>
   );
 };

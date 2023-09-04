@@ -21,8 +21,9 @@ import { OrderSection } from "./components/Dashboard/OrderSection/OrderSection"
 import { DashboardLayout } from "./components/Dashboard/DashboardLayout"
 import { MainDash } from "./components/Dashboard/MainDash/MainDash"
 import { CustomerSection } from "./components/Dashboard/CustomerSection/CustomerSection"
-import {ProductSection} from "./components/Dashboard/ProductSection/ProductSection"
+import { ProductSection } from "./components/Dashboard/ProductSection/ProductSection"
 import AnalyticSection from "./components/Dashboard/AnalyticSection/AnalyticSection"
+import Reviews from "./components/Reviews/Review"
 
 function App() {
   const location = useLocation()
@@ -56,6 +57,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/form" element={<Form />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/reviews/:id" element={<Reviews />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/wishlist" element={<WhisList />} />
         <Route

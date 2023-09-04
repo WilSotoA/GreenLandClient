@@ -1,11 +1,11 @@
-import React from "react";
-import Slider from "react-slick";
-import { useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import React from "react"
+import Slider from "react-slick"
+import { useSelector } from "react-redux"
+import { NavLink } from "react-router-dom"
 
 //lo saque de aqui https://codesandbox.io/s/ecstatic-curran-cr2g90?file=/src/App.js&resolutionWidth=748&resolutionHeight=675
 export const SimpleSlider = () => {
-  const allProducts = useSelector((state) => state.allProducts);
+  const allProducts = useSelector((state) => state.allProducts)
 
   const settings = {
     className: "center",
@@ -20,23 +20,23 @@ export const SimpleSlider = () => {
       {
         breakpoint: 740, // Cambiar el número aquí según el punto de quiebre deseado
         settings: {
-          slidesToShow: 1
-        }
+          slidesToShow: 1,
+        },
       },
       {
         breakpoint: 480, // Cambiar el número aquí según el punto de quiebre deseado
         settings: {
-          slidesToShow: 1
-        }
+          slidesToShow: 1,
+        },
       },
       {
         breakpoint: 1630, // Puedes agregar más puntos de quiebre según sea necesario
         settings: {
-          slidesToShow: 3
-        }
-      }
-    ]
-  };
+          slidesToShow: 3,
+        },
+      },
+    ],
+  }
 
   return (
     <div className="container">
@@ -56,24 +56,34 @@ export const SimpleSlider = () => {
       <Slider {...settings}>
         {allProducts.map((product, index) => (
           <div key={index}>
-            <NavLink to={`/detail/${product.id}`}>
+            <NavLink className="navLink" to={`/detail/${product.id}`}>
               <h3>
                 <img
                   src={product.image}
                   alt={`Imagen ${index + 1}`}
-                  style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    objectFit: "contain",
+                  }}
                 />
-                <div className="link"><p>{product.name}</p></div>
+                <div className="link">
+                  <p>{product.name}</p>
+                </div>
               </h3>
             </NavLink>
           </div>
         ))}
       </Slider>
     </div>
-  );
-};
+  )
+}
 
 const cssstyle = `
+.navLink {
+  text-decoration: none;
+}
+
 .container {
   margin: 0 auto;
   padding: 0px 40px 0px 40px;
@@ -153,4 +163,4 @@ const cssstyle = `
     width: 290px; /* Cambia el ancho para pantallas muy pequeñas */
   }
 }
-`;
+`

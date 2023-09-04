@@ -28,13 +28,13 @@ export const Cards = () => {
   useEffect(() => {
     if (auth?.allOrders?.length > 0) {
       const totalRevenue = auth.allOrders.reduce(
-        (total, order) => total + order.totalPrice,
+        (total, order) => total + order.orden.totalPrice,
         0
       );
 
       const timeSeries = auth.allOrders.map((order) => ({
-        x: new Date(order.date).getTime(),
-        y: order.totalPrice,
+        x: new Date(order.orden.date).getTime(),
+        y: order.orden.totalPrice,
       }));
 
       setSalesData([
@@ -87,7 +87,7 @@ export const Cards = () => {
             },
           ],
         },
-      ]); // Cierre del array salesData
+      ]); 
     }
   }, [auth?.allOrders]);
 

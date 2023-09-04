@@ -75,10 +75,10 @@ export const RecentOrders = () => {
               >
                 {auth?.allOrders?.length > 0 &&
                   recentOrders.map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell>{order.id}</TableCell>
+                    <TableRow key={order.orden.id}>
+                      <TableCell>{order.orden.id}</TableCell>
                       <TableCell>
-                        {new Date(order.date).toLocaleString("en-US", {
+                        {new Date(order.orden.date).toLocaleString("en-US", {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
@@ -86,12 +86,12 @@ export const RecentOrders = () => {
                           minute: "2-digit",
                         })}
                       </TableCell>
-                      <TableCell>{order.totalPrice}</TableCell>
+                      <TableCell>{order.orden.totalPrice}</TableCell>
                       <TableCell>
-                      <span className={style.status} style={makeStyle(order.status)}>{order.status}</span></TableCell>
-                      <TableCell>{order.user.id}</TableCell>
-                      <TableCell>{order.user.name}</TableCell>
-                      <TableCell>{order.user.email}</TableCell>
+                      <span className={style.status} style={makeStyle(order.orden.status)}>{order.orden.status}</span></TableCell>
+                      <TableCell>{order.orden.user.id}</TableCell>
+                      <TableCell>{order.orden.user.name}</TableCell>
+                      <TableCell>{order.orden.user.email}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
