@@ -17,6 +17,7 @@ const Reviews = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [hasPurchased, setHasPurchased] = useState(false);
+  const [hasReviews, setHasReviews] = useState(reviews.length > 0);
   const token = JSON.parse(localStorage.getItem("profile"))?.token;
   const config = { headers: { Authorization: `Bearer ${token}` } };
 
@@ -115,7 +116,7 @@ const Reviews = () => {
         if (response.status === 200) {
           // La reseña se eliminó correctamente
           setSuccessMessage("Review deleted successfully");
-          fetchReviews(); // Actualiza la lista de reseñas
+          setReviews(reviews.filter(review => review.id !== reviewId)); // Filtrar la lista de reseñas para eliminar la reseña eliminada
         }
       }
     } catch (error) {
@@ -129,7 +130,11 @@ const Reviews = () => {
     }
   };
 
-  if (reviews.length === 0) {
+  useEffect(() => {
+    setHasReviews(reviews.length > 0);
+  }, [reviews]);
+
+if (!hasReviews) {
     return (
       <div className={styles.reviewsContainer}>
         <h2 className={styles.reviewsContainerH2}>Reviews</h2>
