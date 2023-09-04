@@ -1,14 +1,12 @@
-import React, {useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import styles from "./Review.module.css";
 
-
 const { VITE_SERVER_URL } = import.meta.env;
 import { alertConfirm, alertAcept } from "../SweetAlert/SweetAlert";
 import { useSelector } from "react-redux";
-
 
 const Reviews = () => {
   const auth = useSelector((state) => state.authData);
@@ -21,7 +19,6 @@ const Reviews = () => {
   const [hasPurchased, setHasPurchased] = useState(false);
   const token = JSON.parse(localStorage.getItem("profile"))?.token;
   const config = { headers: { Authorization: `Bearer ${token}` } };
-  
 
   const fetchReviews = useCallback(async () => {
     try {
@@ -41,16 +38,16 @@ const Reviews = () => {
   useEffect(() => {
     const checkPurchase = async () => {
       try {
-          const response = await axios.get(
-            `${VITE_SERVER_URL}/orders/purchase?userId=${auth?.id}&productId=${id}`,
-            config
-          );
-          setHasPurchased(response.data.purchase);
-         }    catch (error) {
-             console.error(error);
-         }
+        const response = await axios.get(
+          `${VITE_SERVER_URL}/orders/purchase?userId=${auth?.id}&productId=${id}`,
+          config
+        );
+        setHasPurchased(response.data.purchase);
+      } catch (error) {
+        console.error(error);
+      }
     };
-      if (auth?.id) {
+    if (auth?.id) {
       checkPurchase();
     }
   }, [auth?.id, id, config]);
@@ -71,9 +68,11 @@ const Reviews = () => {
       }
 
       if (!hasPurchased) {
-        setErrorMessage("Only users who have purchased the product can submit a review");
+        setErrorMessage(
+          "Only users who have purchased the product can submit a review"
+        );
         return;
-      }  
+      }
 
       await axios.post(
         `${VITE_SERVER_URL}/reviews/`,
@@ -85,21 +84,23 @@ const Reviews = () => {
         },
         config
       );
-        // La reseña se envió correctamente
-        setSuccessMessage("Review submitted successfully");
-        setRating(0);
-        setMessage("");
-        fetchReviews(); // Actualiza la lista de reseñas
-
+      // La reseña se envió correctamente
+      setSuccessMessage("Review submitted successfully");
+      setRating(0);
+      setMessage("");
+      fetchReviews(); // Actualiza la lista de reseñas
     } catch (error) {
       console.error(error);
-      alertAcept("error", "Error creating review" ,error.response?.data?.error|| error.message );
+      alertAcept(
+        "error",
+        "Error creating review",
+        error.response?.data?.error || error.message
+      );
       setErrorMessage("Error submitting review");
     }
   };
 
   const handleDeleteReview = async (reviewId) => {
-    if (auth && (auth.id === reviewId || auth.id === 1)) {
     try {
       const confirmed = await alertConfirm(
         "warning",
@@ -119,10 +120,13 @@ const Reviews = () => {
       }
     } catch (error) {
       console.error(error);
-      alertAcept("error", "Error deleting review" ,error.response?.data?.error|| error.message );
+      alertAcept(
+        "error",
+        "Error deleting review",
+        error.response?.data?.error || error.message
+      );
       setErrorMessage("Error deleting review");
     }
-   }
   };
 
   if (reviews.length === 0) {
@@ -130,7 +134,7 @@ const Reviews = () => {
       <div className={styles.reviewsContainer}>
         <h2 className={styles.reviewsContainerH2}>Reviews</h2>
         <Link to={`/reviews/${id}`} className={styles.linkReviews}>
-        This product has no reviews yet...
+          This product has no reviews yet...
         </Link>
       </div>
     );
@@ -147,7 +151,7 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
       <Link to={`/reviews/${id}`} className={styles.linkReviews}>
         Read {reviews.length} Reviews
       </Link>
-  
+
       {reviews.map((review) => (
         <div className={styles.reviewItem} key={review.id}>
           <div className={styles.userInfo}>
@@ -167,7 +171,8 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
             </div>
           </div>
           <p>{review.message}</p>
-          {(auth && (auth.id === review.userId || auth.id === 1)) && (
+
+          {auth && (auth.id === review.user.id || auth.id === 1) && (
             <button
               className={styles.deleteButton}
               onClick={() => handleDeleteReview(review.id)}
@@ -177,7 +182,7 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
           )}
         </div>
       ))}
-  
+
       <div className={styles.starIcons}>
         {[1, 2, 3, 4, 5].map((value) => (
           <span key={value} onClick={() => handleRatingChange(value)}>
@@ -189,7 +194,7 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
           </span>
         ))}
       </div>
-  
+
       <textarea
         className={styles.reviewFormTextarea}
         placeholder="Write your review......"
@@ -197,12 +202,14 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
         onChange={handleMessageChange}
         disabled={!hasPurchased}
       ></textarea>
-  
+
       <button className={styles.reviewFormButton} onClick={handleSubmitReview}>
         Submit Review
       </button>
-      {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
-        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+      {successMessage && (
+        <p className={styles.successMessage}>{successMessage}</p>
+      )}
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
     </div>
   );
 };

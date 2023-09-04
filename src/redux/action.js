@@ -168,8 +168,6 @@ export const getDetailOrders = (orderId) => {
 }
 
 export const authData = (profile) => {
-  console.log("action ----------------------")
-  console.log(profile)
   return {
     type: AUTH,
     payload: profile,

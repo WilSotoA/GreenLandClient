@@ -17,7 +17,6 @@ import { getAllOrders } from "../../../redux/action";
 import style from "./OrderSection.module.css";
 
 const makeStyle = (status) => {
-  // console.log(status);
   if (String(status) === "approved") {
     return {
       background: "rgb(145 254 159 / 47%)",

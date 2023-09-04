@@ -94,8 +94,6 @@ export default function reducer(state = initialState, { type, payload }) {
       }
     }
     case AUTH:
-      console.log("payload-----------------------")
-      console.log(payload)
       if (!localStorage.getItem("profile"))
         localStorage.setItem("profile", JSON.stringify(payload))
       return {

@@ -38,7 +38,7 @@ export const UserProfile = () => {
   })
   const tabs = [
     { name: "Account Profile", icon: <FaUserCog /> },
-    // { name: "Order History", icon: <BsFillBagCheckFill /> },
+    { name: "Order History", icon: <BsFillBagCheckFill /> },
     { name: "Change Password", icon: <RiLockPasswordFill /> },
   ]
 
