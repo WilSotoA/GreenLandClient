@@ -1,10 +1,8 @@
-import React from 'react'
-import style from './MainDash.module.css'
-
-import { RecentOrders } from '../Table/Table'
-import { Cards } from '../Card/Card'
-import { RightSide } from '../RightSide/RightSide'
-
+import React from "react";
+import style from "./MainDash.module.css";
+import { RecentOrders } from "../Table/Table";
+import { Cards } from "../Card/Card";
+import { RightSide } from "../RightSide/RightSide";
 
 export const MainDash = () => {
   return (

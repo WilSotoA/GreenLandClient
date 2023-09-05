@@ -19,6 +19,9 @@
     background-color: var(--verdePrincipal);
     border-radius: 10px;
 }
+.modTableContainer{
+  height: 100%;
+}
 .MuiTableRow-root > * {
     padding: 10px;
   }

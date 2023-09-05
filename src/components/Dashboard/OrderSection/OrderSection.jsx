@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { getAllOrders } from "../../../redux/action";
 import style from "./OrderSection.module.css";
+import { alertAcept } from "../../SweetAlert/SweetAlert";
 
 const makeStyle = (status) => {
   if (String(status) === "approved") {
@@ -46,6 +47,7 @@ export const OrderSection = () => {
   const [page, setPage] = useState(1); // Página actual
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 7; // Cantidad de elementos por págin
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     dispatch(getAllOrders(auth?.id));
@@ -76,15 +78,37 @@ export const OrderSection = () => {
     });
   };
 
-  const filteredOrders = auth?.allOrders?.filter(
-    (order) =>
-      order.orden.id.toString() === searchTerm ||
-      order.orden.totalPrice.toString() === searchTerm ||
-      order.orden.status.includes(searchTerm) ||
-      order.orden.user.name.includes(searchTerm) ||
-      order.orden.user.email.toString() === searchTerm
-  );
+  const filteredOrders =
+    auth?.allOrders?.filter(
+      (order) =>
+        order.orden.id.toString() === searchTerm ||
+        order.orden.totalPrice.toString() === searchTerm ||
+        order.orden.status.includes(searchTerm) ||
+        order.orden.user.name.includes(searchTerm) ||
+        order.orden.user.email.toString() === searchTerm
+    ) || [];
 
+  if (filteredOrders.length === 0 && searchTerm.length > 0) {
+    alertAcept("error", "Nothing to see here").then((result) => {
+      if (result.isConfirmed) {
+        setSearchTerm("");
+        setPage(1);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (filteredOrders) {
+      setTotalPages(Math.ceil(filteredOrders.length / itemsPerPage));
+    }
+  }, [filteredOrders, itemsPerPage]);
+
+  // Asegúrate de que la página actual sea válida
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
   //Paginate
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -111,7 +135,10 @@ const paginatedOrders = filteredOrders.slice(
         variant="outlined"
         fullWidth
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          setPage(1);
+        }}
         className={style.searchBar}
         style={{ marginBottom: "10px", width: "90%" }}
       />
@@ -232,11 +259,10 @@ const paginatedOrders = filteredOrders.slice(
         </TableContainer>
 
         <Pagination
-          count={Math.ceil(auth?.allOrders?.length / itemsPerPage)}
+          count={totalPages}
           page={page}
           onChange={handleChangePage}
           className={style.Pagination}
-          style={{ marginTop: "10px auto", textAlign: "center" }}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './CustomerSection.module.css'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
 
 const { VITE_SERVER_URL } = import.meta.env;
@@ -14,8 +14,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+
 import { alertAcept } from '../../SweetAlert/SweetAlert';
 import { UserUpdate } from '../UserUpdate/UserUpdate';
+import { getUsers } from '../../../redux/action';
 
 
 const makeStyle = (status) => {
@@ -45,37 +47,25 @@ const makeStyle = (status) => {
 export const CustomerSection = () => {
   const auth = useSelector((state) => state.authData);
 
-  const [rows, setRows] = useState([])
   const [statusUser, setstatusUSer] = useState({
     id: "",
     active: "",
   })
   const [viewdetail, setViewdetail] = useState(false)
   const [selectUser, setSelectUser] = useState({})
+  const dispatch = useDispatch();
 
-  const token = JSON.parse(localStorage.getItem('profile'))?.token || null;
 
-  const dataUsers = async () => {
-    try {
-      const allUsers = await axios.get(`${VITE_SERVER_URL}/users`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      setRows(allUsers.data);
-    } catch (error) {
-      console.log("ERRRRORRerror", error);
-      alertAcept("error", "Error Users", error.response?.data?.error.name || error.message);
-    }
-  }
+
   useEffect(() => {
     if (statusUser.active === true || statusUser.active === false) {
       const formDataToSend = new FormData();
       formDataToSend.append("active", statusUser.active);
       updateActive(statusUser.id, formDataToSend);
     }
-    dataUsers()
-  }, [statusUser, viewdetail, selectUser])
+    dispatch(getUsers(auth?.id))
+  }, [dispatch, statusUser, viewdetail, selectUser])
+  // }, [dispatch])
 
   const handleStatus = (event) => {
     event.preventDefault();
@@ -95,32 +85,36 @@ export const CustomerSection = () => {
 
 
   const updateActive = async (id, formDataToSend) => {
-    try {
-      await axios.patch(`${VITE_SERVER_URL}/users/${id}`, formDataToSend, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      const user = rows.find((s) => s.id === Number(id) && s.name)
-      if (statusUser.active === true) {
-        alertAcept("success", "User Enabled", "",
-          `<p>the user  <b>${user.name}  </b> was Enabled <p>`)
+    const token = JSON.parse(localStorage.getItem('profile'))?.token || null;
+    const user = auth?.allUsers?.find((s) => s.id === Number(id) && s.name)
+    if (statusUser.active === true) {
+      try {
+        await axios.patch(`${VITE_SERVER_URL}/users/${id}`, formDataToSend, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+        alertAcept("success", "User Enabled", "", `<p>the user  <b>${user.name}  </b> was Enabled <p>`)
         setstatusUSer({ id: "", active: "" })
-      }
-      if (statusUser.active === false) {
-        alertAcept("success", "User Disabled", "",
-          `<p>the user  <b>${user.name}</b>  was Disabled<p>`)
-        setstatusUSer({ id: "", active: "" })
+      } catch (error) {
+        console.log("sms error: ====>", error.message);
       }
     }
-    catch (error) {
-      console.log("sms error: ====>", error.message);
+    if (statusUser.active === false) {
+      try {
+        await axios.patch(`${VITE_SERVER_URL}/users/${id}`, formDataToSend, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+        alertAcept("success", "User Disabled", "", `<p>the user  <b>${user.name}</b>  was Disabled<p>`)
+        setstatusUSer({ id: "", active: "" })
+      } catch (error) {
+        console.log("sms error: ====>", error.message);
+      }
     }
+
   }
 
   const handleDteail = (event) => {
     const { id, name } = event.target
-    const use = rows.filter(s => s.id === Number(id) && s)
+    const use = auth?.allUsers?.filter(s => s.id === Number(id) && s)
     setSelectUser(use)
     if (String(name) === 'close') setViewdetail(false)
     if (String(name) === 'detail') setViewdetail(true)
@@ -132,11 +126,12 @@ export const CustomerSection = () => {
       <h1>Customers</h1>
       <div className={style.Table}>
 
-        {!viewdetail ?
-          <TableContainer
-            // component={Paper}
-            style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
-          >
+        <TableContainer
+          // component={Paper}
+          style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+          className={style.modTableContainer}
+        >
+          {!viewdetail ?
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow className={style.head}>
@@ -149,7 +144,7 @@ export const CustomerSection = () => {
                 </TableRow>
               </TableHead>
               <TableBody style={{ color: "white", backgroundColor: "transparent" }}>
-                {rows.map((row) => (
+                {auth?.allUsers?.map((row) => (
                   <TableRow
                     key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -186,20 +181,20 @@ export const CustomerSection = () => {
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
-          :
-          <>
-            <Button
-              align="center"
-              variant="outlined"
-              size="small"
-              name="close"
-              onClick={handleDteail}
-            >x
-            </Button>
-            <UserUpdate key={selectUser.id} row={selectUser[0]} />
-          </>
-        }
+            :
+            <>
+              <Button
+                align="center"
+                variant="outlined"
+                size="small"
+                name="close"
+                onClick={handleDteail}
+              >x
+              </Button>
+              <UserUpdate key={selectUser.id} row={selectUser[0]} />
+            </>
+          }
+        </TableContainer>
 
       </div>
     </div>

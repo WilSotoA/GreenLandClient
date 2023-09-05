@@ -16,7 +16,7 @@ import {
   GET_ALL_ORDERS,
   GET_DETAIL_ORDERS,
   DELETE_REVIEW,
-  
+  GET_USERS_ADMIN,  
 } from "./actionType"
 
 const initialState = {
@@ -133,17 +133,26 @@ export default function reducer(state = initialState, { type, payload }) {
           allOrders: payload,
         },
       }
-
+      
       case DELETE_REVIEW:
         const updatedReviews = state.allReviews.filter(
           (review) => review.id !== action.payload
-        );
-        return {
-          ...state,
+          );
+          return {
+            ...state,
           allReviews: updatedReviews,
         };
+        
+        case GET_USERS_ADMIN:
+          return {
+            ...state,
+            authData: {
+              ...state.authData,
+              allUsers: payload,
+            },
+          }
 
-    default:
-      return { ...state }
-  }
+        default:
+          return { ...state }
+        }
 }

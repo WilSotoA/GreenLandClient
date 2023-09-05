@@ -6,6 +6,11 @@
     max-height: 95%;
     overflow: auto;
 }
+
+.Pagination{
+  margin-top: 10px !important;
+  margin-left: 42% !important;
+}
 .searchBar {
   width: 50%; 
 }
@@ -58,6 +63,7 @@
     .Table {
       margin-top: 2rem;
     }
+    
   }
   
   
@@ -67,5 +73,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+    .Pagination{
+      margin: auto !important;
     }
   }

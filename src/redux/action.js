@@ -17,6 +17,7 @@ import {
   GET_ALL_ORDERS,
   GET_DETAIL_ORDERS,
   DELETE_REVIEW,
+  GET_USERS_ADMIN,
 } from "./actionType"
 
 export const paginatePrev = () => {
@@ -190,3 +191,19 @@ export const deleteReview = (reviewId) => {
     }
   };
 };
+
+export const getUsers = () => {
+  return async function (dispatch) {
+    try {
+      const token = JSON.parse(localStorage.getItem("profile"))?.token || null
+      const { data } = await axios.get(`${VITE_SERVER_URL}/users/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      dispatch({ type: GET_USERS_ADMIN, payload: data })
+    } catch (error) {
+      alert("error: " + error.response.data.error)
+    }
+  }
+}

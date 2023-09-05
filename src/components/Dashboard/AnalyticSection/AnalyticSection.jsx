@@ -1,11 +1,16 @@
 import React from 'react'
 import style from './AnalyticSection.module.css'
+import TopSellers from './TopSellers'
+import LoyaltyChart from './Loyalty'
+import AverageRating from './AverageRating'
 
 
 const AnalyticSection = () => {
   return (
     <div className={style.AnalyticSection}>
-        <h2>aca van los grafos</h2>
+        <TopSellers />
+        <LoyaltyChart />
+        <AverageRating />
     </div>
   )
 }

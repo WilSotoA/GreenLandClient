@@ -34,13 +34,13 @@ export const Detail = () => {
         if (isInCart) {
             const resAlertCar = await alertConfirm('warning', 'Delete Product!', 'Do you want to remove this product from your Car?')
             if (resAlertCar) {
-                alert("prueba si isInCart es true")
+                // alert("prueba si isInCart es true")
                 const products = JSON.parse(localStorage.getItem('cartProducts')) || [];
                 const updatedProducts = products.filter((p) => p.id !== productDetail.id);
                 localStorage.setItem('cartProducts', JSON.stringify(updatedProducts));
             }
         } else {
-            alert("prueba si isInCart es false")
+            // alert("prueba si isInCart es false")
             let quantity = parseInt(quantityInputRef.current.value);
             if (isNaN(quantity) || quantity < 1) {
                 quantity = 1;
@@ -68,7 +68,6 @@ export const Detail = () => {
         }
         setIsInCart(!isInCart);
     };
-    // console.log("son todos los productos detail ====>> ", productDetail);
 
     const [whis, setWhis] = useState(false);
 
@@ -129,7 +128,6 @@ export const Detail = () => {
 
         if (!existingProduct) {
             products2.push(product);
-            console.log("existe",productDetail);
             localStorage.setItem('cartProducts', JSON.stringify(products2));
         } else {
             console.log('Este producto ya está en el carrito.');

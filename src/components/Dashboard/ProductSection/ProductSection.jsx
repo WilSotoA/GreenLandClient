@@ -20,7 +20,6 @@ import { Form } from '../../Form/Form';
 
 
 const makeStyle = (status) => {
-  // console.log(status);
   if (String(status) === 'true') {
     return {
       background: 'rgb(145 254 159 / 47%)',
@@ -99,7 +98,6 @@ export const ProductSection = () => {
           setUpdateType("")
         }
       }
-      console.log();
       if (updateType === "price") {
         alertAcept("success", "Update Price Product", "",
           `The product  <b>${x.map((s) => s.name)}</b>  was updated with the price <b>${inputsPrice.price}</b>`)
@@ -158,7 +156,6 @@ export const ProductSection = () => {
     if (event.key === 'Enter') {
       const id = event.target.id;
       const priceUpdate = event.target.value;
-      console.log(priceUpdate);
       if (priceUpdate > "0") {
         setUpdateType("price")
         setInputsPrice({ id: id, price: priceUpdate })
@@ -181,9 +178,7 @@ export const ProductSection = () => {
       if (value > 0) {
         setUpdateType('stock')
         setInputsStock({ id: id, stock: value })
-        console.log(value);
         const resetinput = document.querySelector(`input[name="inputstock"][id="${id}"]`);
-        console.log(resetinput)
         resetinput.value = ""
 
       }
@@ -196,7 +191,6 @@ export const ProductSection = () => {
     // setSelectUser(use)
     if (String(name) === 'close') setViewForm(false)
     if (String(name) === 'form') setViewForm(true)
-    console.log(name);
   }
 
   const handleDteail = (event) => {

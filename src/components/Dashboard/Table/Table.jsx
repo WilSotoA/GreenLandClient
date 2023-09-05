@@ -46,7 +46,7 @@ export const RecentOrders = () => {
 
   
   const sortedOrders = auth?.allOrders
-  ? [...auth.allOrders].sort((a, b) => new Date(b.date) - new Date(a.date))
+  ? [...auth.allOrders].sort((a, b) => parseInt(b.orden.id) - parseInt(a.orden.id))
   : [];
   const recentOrders = sortedOrders.slice(0, 5);
   
