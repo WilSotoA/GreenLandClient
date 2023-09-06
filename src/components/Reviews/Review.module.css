@@ -4,7 +4,13 @@
     flex-wrap: wrap;
     flex-direction: column;
   }
-  
+  .hrReview {
+    width: 80% !important;
+    border-color: var(--verdePrincipal);
+    border-width: 2px;
+    border-style: solid;
+    align-self: flex-start;
+  }
   .reviewsContainerH2 {
     font-size: 24px;
     margin-bottom: 10px;

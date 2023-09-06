@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllOrders } from '../../../redux/action';
@@ -37,14 +37,17 @@ function SalesChart() {
   useEffect(() => {
     if (auth?.allOrders?.length > 0) {
       const totalIncome = auth.allOrders.reduce((acc, order) => {
-        const orderTotal = order.detail.reduce((total, item) => total + item.quantity * item.price, 0);
+        const orderTotal = order.detail.reduce((total, item) => {
+          return total + item.quantity * item.price;
+        }, 0);
         return acc + orderTotal;
       }, 0);
+      const formattedIncome = totalIncome.toFixed(2); 
       setChartData((prevChartData) => ({
         ...prevChartData,
         series: [
           {
-            data: [totalIncome],
+            data: [formattedIncome],
           },
         ],
       }));
@@ -52,10 +55,10 @@ function SalesChart() {
   }, [auth?.allOrders]);
 
   return (
-    <div>
-      <h2>Total Incomes</h2>
+    <>
+     <h2>Total Incomes</h2>
       <Chart options={chartData.options} series={chartData.series} type="bar" height={350} />
-    </div>
+    </>
   );
 }
 

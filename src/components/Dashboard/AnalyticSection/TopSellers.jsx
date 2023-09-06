@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ApexCharts from 'react-apexcharts';
 import { getAllOrders } from '../../../redux/action';
@@ -65,7 +65,7 @@ const TopSellers = () => {
     }}, [auth?.allOrders]);
   
     return (
-      <div>
+      <>
         <h2>Top Sellers</h2>
         <ApexCharts
           options={chartData.options}
@@ -73,7 +73,7 @@ const TopSellers = () => {
           type="pie"
           width={chartData.options.chart.width}
         />
-      </div>
+      </>
     );
   };
   

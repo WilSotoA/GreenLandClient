@@ -153,9 +153,7 @@ También implemento en el renderizado lógica para las estrellas si deben estar 
   return (
     <div className={styles.reviewsContainer}>
       <h2 className={styles.reviewsContainerH2}>Reviews</h2>
-      <Link to={`/reviews/${id}`} className={styles.linkReviews}>
-        Read {reviews.length} Reviews
-      </Link>
+      <hr className={styles.hrReview}></hr>
 
       {reviews.map((review) => (
         <div className={styles.reviewItem} key={review.id}>

@@ -25,7 +25,6 @@ import { MainDash } from "./components/Dashboard/MainDash/MainDash"
 import { CustomerSection } from "./components/Dashboard/CustomerSection/CustomerSection"
 import { ProductSection } from "./components/Dashboard/ProductSection/ProductSection"
 import AnalyticSection from "./components/Dashboard/AnalyticSection/AnalyticSection"
-import Reviews from "./components/Reviews/Review"
 import { UndoPurchaseForm } from "./components/UndoPurchaseForm/UndoPurchaseForm"
 import { NotFound404 } from "./components/NotFound404/NotFound404"
 
@@ -62,7 +61,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/form" element={<Form />} />
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/reviews/:id" element={<Reviews />} />
+        
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/wishlist" element={<WhisList />} />
         <Route

@@ -1,26 +1,21 @@
 .AnalyticSection {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 7px;
-    grid-row-gap: 7px;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+  gap: 1rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-    @media screen and (max-width: 950px) {
-        .AnalyticSection {
-          justify-content: flex-start;
-          margin-top: 2rem;
-          grid-template-columns: 1fr; 
-          overflow-y: scroll;
-        }
-      }
+.AnalyticSection::-webkit-scrollbar {
+  width: 7px;
+}
 
+.AnalyticSection::-webkit-scrollbar-thumb {
+  background-color: var(--verdePrincipal);
+  border-radius: 10px;
+}
 
-    @media screen and (max-width: 480px) {
-        .AnalyticSection {
-          align-items: center;
-          grid-template-columns: 1fr; 
-        }
-      }
-    
-    
+.containerGraph {
+  min-height: 380px;
+  overflow: auto hidden;
+}

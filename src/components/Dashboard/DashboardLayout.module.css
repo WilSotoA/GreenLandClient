@@ -22,14 +22,13 @@
     border-radius: 2rem;
     gap: 16px;
     grid-template-columns: 11rem auto;
-    overflow: hidden;
+    overflow: hidden auto;
   }
 
 
   @media screen and (max-width: 1200px) {
     .DashboardGlass{
       grid-template-columns: 10% auto;
-      overflow-y: scroll;
     } 
   }
   

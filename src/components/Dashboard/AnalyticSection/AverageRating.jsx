@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ApexCharts from 'react-apexcharts';
 import { getAllReviews } from '../../../redux/action'; 
@@ -63,7 +63,7 @@ const RatingChart = () => {
   }, [allReviews]);
 
   return (
-    <div>
+    <>
         <h2>Reviews Ratings</h2>
       <ApexCharts
         options={chartData.options}
@@ -71,7 +71,7 @@ const RatingChart = () => {
         type="bar"
         height={chartData.options.chart.height}
       />
-    </div>
+    </>
   );
 };
 

@@ -2,23 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "./Login.module.css";
 import axios from "axios";
-import { LoginSocialTwitter, LoginSocialGoogle } from "reactjs-social-login";
-import {
-  TwitterLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
+import { GoogleLoginButton } from "react-social-login-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { authData } from "../../redux/action";
 import { alertAcept } from "../SweetAlert/SweetAlert";
 import loader from "../../assets/loaderGif.gif";
 
-const {
-  VITE_SERVER_URL,
-  VITE_TWITTER_APP_ID,
-  VITE_TWITTER_APP_KEY,
-  VITE_TWITTER_APP_SECRET,
-  VITE_GG_APP_ID,
-} = import.meta.env;
+const { VITE_SERVER_URL, VITE_GG_APP_ID } = import.meta.env;
 
 export const Login = () => {
   const auth = useSelector((state) => state.authData);
@@ -246,19 +237,6 @@ export const Login = () => {
       </form>
 
       <section className={style.thirdParty}>
-        <LoginSocialTwitter
-          client_id={VITE_TWITTER_APP_KEY || ""}
-          redirect_uri={"https://greenland-client.vercel.app/login"}
-          onLoginStart={() => console.log("started login")}
-          onResolve={({ provider, data }) => {
-            console.log(provider, data);
-          }}
-          onReject={(err) => {
-            console.log(err);
-          }}
-        >
-          <TwitterLoginButton />
-        </LoginSocialTwitter>
         <LoginSocialGoogle
           isOnlyGetCode={true}
           client_id={VITE_GG_APP_ID}

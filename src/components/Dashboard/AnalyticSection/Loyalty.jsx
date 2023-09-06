@@ -89,7 +89,7 @@ const LoyaltyChart = () => {
 }}, [auth?.allOrders]);
 
   return (
-    <div>
+    <>
       <h2>Loyalty</h2>
       <ApexCharts
         options={chartData.options}
@@ -97,7 +97,7 @@ const LoyaltyChart = () => {
         type="bar"
         height={chartData.options.chart.height}
       />
-    </div>
+    </>
   );
 };
 
