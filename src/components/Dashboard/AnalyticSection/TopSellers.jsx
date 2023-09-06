@@ -17,7 +17,7 @@ const TopSellers = () => {
         },
         responsive: [
           {
-            breakpoint: 480,
+            breakpoint: 280,
             options: {
               chart: {
                 width: 200,

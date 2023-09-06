@@ -3,7 +3,6 @@ import Slider from "react-slick"
 import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 
-//lo saque de aqui https://codesandbox.io/s/ecstatic-curran-cr2g90?file=/src/App.js&resolutionWidth=748&resolutionHeight=675
 export const SimpleSlider = () => {
   const allProducts = useSelector((state) => state.allProducts)
 
@@ -43,7 +42,6 @@ export const SimpleSlider = () => {
       <link
         rel="stylesheet"
         type="text/css"
-        charSet="UTF-8"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
       />
       <link
@@ -54,7 +52,9 @@ export const SimpleSlider = () => {
       <style>{cssstyle}</style>
       <h2>New Arrivals</h2>
       <Slider {...settings}>
-        {allProducts.map((product, index) => (
+        {allProducts.map((product, index) => {
+          if (product.active) {
+            return (
           <div key={index}>
             <NavLink className="navLink" to={`/detail/${product.id}`}>
               <h3>
@@ -73,7 +73,8 @@ export const SimpleSlider = () => {
               </h3>
             </NavLink>
           </div>
-        ))}
+        )}
+      })}
       </Slider>
     </div>
   )

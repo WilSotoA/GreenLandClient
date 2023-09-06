@@ -12,7 +12,21 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+.Pagination{
+  display: flex;
+  font-size: xx-small !important;
+  flex-direction: row-reverse;
+}
+.modTableCell{
+padding: 225px;
+}
+.prodsContLoader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
     
   .Table{
       /* height:100%; */
@@ -26,7 +40,7 @@ input[type=number]::-webkit-outer-spin-button {
       background-color: var(--verdePrincipal);
       border-radius: 10px;
   }
-
+  
   .imageProduct{
     width: 20%;
     height: 20%;

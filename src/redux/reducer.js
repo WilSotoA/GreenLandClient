@@ -17,6 +17,7 @@ import {
   GET_DETAIL_ORDERS,
   DELETE_REVIEW,
   GET_USERS_ADMIN,  
+  UNDO_PURCHASE_FORM,
 } from "./actionType"
 
 const initialState = {
@@ -29,7 +30,15 @@ const initialState = {
   productDetail: [],
   whisListState: [],
   deletingReview: false,
-}
+  undoPurchaseForm: {
+    name: '',
+    email: '',
+    orderNumber: '',
+    message: '',
+    isSubmitting: false,
+    submissionMessage: '',
+  },
+};
 
 export default function reducer(state = initialState, { type, payload }) {
   switch (type) {
@@ -151,6 +160,19 @@ export default function reducer(state = initialState, { type, payload }) {
               allUsers: payload,
             },
           }
+      
+          case UNDO_PURCHASE_FORM:
+            return {
+              ...state,
+              undoPurchaseForm: {
+                name: '',
+                email: '',
+                orderNumber: '',
+                message: '',
+                isSubmitting: false,
+                submissionMessage: '',
+              },
+            };
 
         default:
           return { ...state }

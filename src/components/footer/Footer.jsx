@@ -18,6 +18,7 @@ export const Footer = () => {
                     <Link className={styled.links} to="/#">Privacy Policy</Link>
                     <Link className={styled.links} to="/#">License</Link>
                     <Link className={styled.links} to="/contact">Contact</Link>
+                    <Link className={styled.links} to="/undo-purchase">⇄Purchase regret</Link> {/* Nuevo botón de arrepentimiento */}
                 </div>
                 <div className={styled.right}>
                     <Link className={styled.icon_image} to="https://youtube.com/" target="_blank">

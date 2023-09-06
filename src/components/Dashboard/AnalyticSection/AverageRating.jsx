@@ -44,14 +44,15 @@ const RatingChart = () => {
 
   useEffect(() => {
     const ratings = allReviews.map((review) => review.rating);
-    const ratingCounts = Array.from({ length: 5 }, (_, i) => ratings.filter((rating) => rating === i + 1).length);
+    const ratingCounts = Array.from({ length: 5 }, (_, i) => ratings.filter((rating) => rating === i + 1).length).reverse();
 
     setChartData((prevChartData) => ({
       options: {
         ...prevChartData.options,
         xaxis: {
-          categories: [1, 2, 3, 4, 5],
+          categories: [5, 4, 3, 2, 1],
         },
+        colors: ['#8cb799', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF'],
       },
       series: [
         {

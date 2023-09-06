@@ -1,10 +1,10 @@
 .CompactCard {
     display: flex;
     flex: 1;
-    height: 10rem !important;
+    height: 7rem !important;
     border-radius: 0.7rem;
     color: #242d49;
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     cursor: pointer;
   }
@@ -22,7 +22,7 @@
     
   }
   .CircularProgressbar {
-    width: 6rem !important;
+    width: 4rem !important;
     overflow: visible;
   }
   .CircularProgressbar-path {
@@ -39,9 +39,8 @@
   }
  
 .radialBar > span {
-    font-size: 25px;
+    font-size: 17px;
     font-weight: bold;
-    margin-left: 2%;
   }
 
 /* sideDetail*/
@@ -54,17 +53,17 @@
   }
   
   .detail > span:nth-child(2) {
-    font-size: 30px;
+    font-size: 22px;
     font-weight: bold;
   }
   .detail > span:nth-child(3) {
-    font-size: 20px;
+    font-size: 12px;
   }
 
   /* ExpandedCard */
 .ExpandedCard {
     position:absolute;
-    width: 70%;
+    width: 60%;
     height: 70vh;
     z-index: 9;
     left: 13rem;
@@ -114,7 +113,7 @@
   
   @media screen and (max-width: 768px) {
      .Cards{
-      width: 90%;
+      width: fit-content;
     }
     .ExpandedCard {
       top: 8rem;
@@ -122,4 +121,10 @@
       left: 25px;
       width: 80%;
     }
+    
+  }
+  @media screen and (max-width: 390px) { 
+   .Cards{
+    width: fit-content;
+   }
   }

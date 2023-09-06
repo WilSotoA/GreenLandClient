@@ -14,6 +14,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import loader from "../../../assets/loaderGif.gif";
+
 
 import { alertAcept } from '../../SweetAlert/SweetAlert';
 import { UserUpdate } from '../UserUpdate/UserUpdate';
@@ -54,6 +56,7 @@ export const CustomerSection = () => {
   const [viewdetail, setViewdetail] = useState(false)
   const [selectUser, setSelectUser] = useState({})
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
 
 
@@ -63,7 +66,17 @@ export const CustomerSection = () => {
       formDataToSend.append("active", statusUser.active);
       updateActive(statusUser.id, formDataToSend);
     }
-    dispatch(getUsers(auth?.id))
+    // dispatch(getUsers(auth?.id))
+
+    Promise.all([dispatch(getUsers(auth?.id))])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        setLoading(false);
+      });
+
   }, [dispatch, statusUser, viewdetail, selectUser])
   // }, [dispatch])
 
@@ -88,14 +101,17 @@ export const CustomerSection = () => {
     const token = JSON.parse(localStorage.getItem('profile'))?.token || null;
     const user = auth?.allUsers?.find((s) => s.id === Number(id) && s.name)
     if (statusUser.active === true) {
+      setLoading(true)
       try {
         await axios.patch(`${VITE_SERVER_URL}/users/${id}`, formDataToSend, {
           headers: { 'Authorization': `Bearer ${token}` }
         })
         alertAcept("success", "User Enabled", "", `<p>the user  <b>${user.name}  </b> was Enabled <p>`)
         setstatusUSer({ id: "", active: "" })
+        setLoading(false)
       } catch (error) {
         console.log("sms error: ====>", error.message);
+        setLoading(false)
       }
     }
     if (statusUser.active === false) {
@@ -122,81 +138,89 @@ export const CustomerSection = () => {
 
 
   return (
-    <div className={style.CustomerSection}>
-      <h1>Customers</h1>
-      <div className={style.Table}>
+    <>
+      {loading === true ? (
+        <div className={style.prodsContLoader}>
+          <img src={loader} alt="Loader"></img>
+        </div>
+      ) : (
+        <div className={style.CustomerSection}>
+          <h1>Customers</h1>
+          <div className={style.Table}>
 
-        <TableContainer
-          // component={Paper}
-          style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
-          className={style.modTableContainer}
-        >
-          {!viewdetail ?
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow className={style.head}>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Origin</TableCell>
-                  <TableCell align="left">Role</TableCell>
-                  <TableCell align="left">Status</TableCell>
-                  <TableCell align="left"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody style={{ color: "white", backgroundColor: "transparent" }}>
-                {auth?.allUsers?.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">{row.name}</TableCell>
-                    <TableCell align="left">{row.email}</TableCell>
-                    <TableCell align="left">{row.origin}</TableCell>
-                    <TableCell align="left">{row.role.name}</TableCell>
-
-                    <TableCell align="left">
-                      <button type="submit"
-                        className={style.buttonstatus}
-                        style={makeStyle(row.active)}
-                        value={row.active}
-                        name={row.name}
-                        id={row.id}
-                        onClick={handleStatus}
+            <TableContainer
+              // component={Paper}
+              style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+              className={style.modTableContainer}
+            >
+              {!viewdetail ?
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow className={style.head}>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="left">Email</TableCell>
+                      <TableCell align="left">Origin</TableCell>
+                      <TableCell align="left">Role</TableCell>
+                      <TableCell align="left">Status</TableCell>
+                      <TableCell align="left"></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody style={{ color: "white", backgroundColor: "transparent" }}>
+                    {auth?.allUsers?.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                       >
-                        {String(row.active)}
-                      </button>
-                    </TableCell>
+                        <TableCell component="th" scope="row">{row.name}</TableCell>
+                        <TableCell align="left">{row.email}</TableCell>
+                        <TableCell align="left">{row.origin}</TableCell>
+                        <TableCell align="left">{row.role.name}</TableCell>
 
-                    <TableCell align="left" className={style.Details}>
-                      <Button
-                        id={row.id}
-                        name="detail"
-                        variant="outlined"
-                        size="small"
-                        onClick={handleDteail}
-                      >Details
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            :
-            <>
-              <Button
-                align="center"
-                variant="outlined"
-                size="small"
-                name="close"
-                onClick={handleDteail}
-              >x
-              </Button>
-              <UserUpdate key={selectUser.id} row={selectUser[0]} />
-            </>
-          }
-        </TableContainer>
+                        <TableCell align="left">
+                          <button type="submit"
+                            className={style.buttonstatus}
+                            style={makeStyle(row.active)}
+                            value={row.active}
+                            name={row.name}
+                            id={row.id}
+                            onClick={handleStatus}
+                          >
+                            {String(row.active)}
+                          </button>
+                        </TableCell>
 
-      </div>
-    </div>
+                        <TableCell align="left" className={style.Details}>
+                          <Button
+                            id={row.id}
+                            name="detail"
+                            variant="outlined"
+                            size="small"
+                            onClick={handleDteail}
+                          >Details
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                :
+                <>
+                  <Button
+                    align="center"
+                    variant="outlined"
+                    size="small"
+                    name="close"
+                    onClick={handleDteail}
+                  >x
+                  </Button>
+                  <UserUpdate key={selectUser.id} row={selectUser[0]} />
+                </>
+              }
+            </TableContainer>
+
+          </div>
+        </div>
+      )}
+    </>
   );
 }

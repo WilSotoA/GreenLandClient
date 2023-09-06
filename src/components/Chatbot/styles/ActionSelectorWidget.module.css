@@ -1,0 +1,25 @@
+.containerBtn {
+    text-align: center;
+}
+
+.btn {
+    color:black;
+    background-color: #fff;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #8CB799;
+    transition: background-color, color .5s ease-in-out;
+    -webkit-transition: background-color, color .5s ease-in-out;
+    -moz-transition: background-color, color .5s ease-in-out;
+    -ms-transition: background-color, color .5s ease-in-out;
+    -o-transition: background-color, color .5s ease-in-out;
+}
+.btn:hover {
+    background-color: #8CB799;
+    color: white;
+}

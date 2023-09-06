@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../redux/action";
 import loader from "../../assets/loaderGif.gif";
+import { Chatbot } from "../Chatbot/Chatbot";
+import { SiChatbot } from "react-icons/si";
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,13 @@ export const Home = () => {
         setLoading(false);
       });
   }, [dispatch]);
+
+  // react-chatbot-kit
+  const [chatbotVisible, setChatbotVisible] = useState(false);
+
+  const toggleChatbot = () => {
+    setChatbotVisible(!chatbotVisible);
+  };
 
   return (
     <>
@@ -59,6 +68,16 @@ export const Home = () => {
             </section>
           </main>
           <ClientComments />
+          <div className={style.chatContainer}>
+            <div
+              className={chatbotVisible ? style.fade_chat : style.fadeOut_chat}
+            >
+              {chatbotVisible && <Chatbot />}
+            </div>
+            <div className={style.iconContainer}>
+              <SiChatbot className={style.icon} onClick={toggleChatbot} />
+            </div>
+          </div>
         </>
       )}
     </>

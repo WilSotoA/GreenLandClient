@@ -1,103 +1,103 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import style from "./SignUp.module.css";
-import axios from "axios";
-import { alertAcept } from "../SweetAlert/SweetAlert";
-import loader from "../../assets/loaderGif.gif";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import style from "./SignUp.module.css"
+import axios from "axios"
+import { alertAcept } from "../SweetAlert/SweetAlert"
+import loader from "../../assets/loaderGif.gif"
 
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 
-const { VITE_SERVER_URL } = import.meta.env;
+const { VITE_SERVER_URL } = import.meta.env
 export const SignUp = () => {
-  const auth = useSelector((state) => state.authData);
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  const [agreeToDataProcessing, setAgreeToDataProcessing] = useState(false);
-  const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const auth = useSelector((state) => state.authData)
+  const [name, setName] = useState("")
+  const [nameError, setNameError] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+  const [agreeToDataProcessing, setAgreeToDataProcessing] = useState(false)
+  const [image, setImage] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (auth) navigate("/home");
-  }, [auth, navigate]);
+    if (auth) navigate("/home")
+  }, [auth, navigate])
 
-  const regExEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  const regExEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,10}/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,10}/
 
   const handleChangeName = (event) => {
-    const value = event.target.value;
-    setName(value);
+    const value = event.target.value
+    setName(value)
     if (value.length < 4 || /[^a-zA-Z\s]/.test(value)) {
-      setNameError(true);
+      setNameError(true)
     } else {
-      setNameError(false);
+      setNameError(false)
     }
-  };
+  }
 
   const handleChangeEmail = (event) => {
-    const value = event.target.value;
-    setEmail(value);
+    const value = event.target.value
+    setEmail(value)
 
     if (!regExEmail.test(value)) {
-      setEmailError(true);
+      setEmailError(true)
     } else {
-      setEmailError(false);
+      setEmailError(false)
     }
-  };
+  }
 
   const handleChangePassword = (event) => {
-    const value = event.target.value;
-    setPassword(value);
+    const value = event.target.value
+    setPassword(value)
 
     if (!regexPassword.test(value)) {
-      setPasswordError(true);
+      setPasswordError(true)
     } else {
-      setPasswordError(false);
+      setPasswordError(false)
     }
-  };
+  }
 
   const handleChangeConfirmPassword = (event) => {
-    const value = event.target.value;
-    setConfirmPassword(value);
+    const value = event.target.value
+    setConfirmPassword(value)
 
     if (value !== password) {
-      setConfirmPasswordError(true);
+      setConfirmPasswordError(true)
     } else {
-      setConfirmPasswordError(false);
+      setConfirmPasswordError(false)
     }
-  };
+  }
 
   const handleChangeDataProcessing = () => {
-    setAgreeToDataProcessing(!agreeToDataProcessing);
-  };
+    setAgreeToDataProcessing(!agreeToDataProcessing)
+  }
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-  };
+    const file = event.target.files[0]
+    setImage(file)
+  }
 
   const handleSignUp = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (name.length < 4 || /[^a-zA-Z\s]/.test(name)) {
       alertAcept(
         "error",
         "Ops, Error!",
         "Please enter a valid name with at least 4 letters and no special characters."
-      );
-      return;
+      )
+      return
     }
 
     if (!regExEmail.test(email)) {
-      alertAcept("error", "Ops, Error!", "Please enter a valid email address.");
-      return;
+      alertAcept("error", "Ops, Error!", "Please enter a valid email address.")
+      return
     }
 
     if (!regexPassword.test(password)) {
@@ -105,14 +105,14 @@ export const SignUp = () => {
         "error",
         "Ops, Error!",
         "Password must be between 6 and 10 characters and contain at least one lowercase letter, one uppercase letter, one number, and one special character."
-      );
+      )
 
-      return;
+      return
     }
 
     if (password !== confirmPassword) {
-      alertAcept("error", "Ops, Error!", "Passwords do not match.");
-      return;
+      alertAcept("error", "Ops, Error!", "Passwords do not match.")
+      return
     }
 
     if (!agreeToDataProcessing) {
@@ -120,45 +120,49 @@ export const SignUp = () => {
         "error",
         "Ops, Error!",
         "Please agree to the processing of personal data."
-      );
-      return;
+      )
+      return
     }
     try {
       //creo una instancia que contruye datos en formato de formulario para enviar por una solicitud http datos al servidor.sweetalert
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("image", image);
+      const formData = new FormData()
+      formData.append("name", name)
+      formData.append("email", email)
+      formData.append("password", password)
+      formData.append("image", image)
       //envio un post al back con los datos del formulario
-      setLoading(true);
-      const response = await axios.post(`${VITE_SERVER_URL}/users`, formData);
+      setLoading(true)
+      const response = await axios.post(`${VITE_SERVER_URL}/users`, formData)
       if (response.status === 200) {
         // registro exitoso, navega a la pag de inicio
-        setLoading(false);
-        alertAcept("success", "User created!", "User created successfully");
-        navigate("/login");
+        setLoading(false)
+        alertAcept(
+          "success",
+          "User created!",
+          "User created successfully, Please check your inbox"
+        )
+        navigate("/login")
       } else {
-        setLoading(false);
+        setLoading(false)
         // error en el registro, muestra mensaje de error
-        throw new Error("Registration failed.");
+        throw new Error("Registration failed.")
       }
     } catch (error) {
-      setLoading(false);
-      console.error(error.response?.data?.error || error.message);
+      setLoading(false)
+      console.error(error.response?.data?.error || error.message)
       alertAcept(
         "error",
         "User not created!",
         error.response?.data?.error || error.message
-      );
+      )
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleLoginOnClick = () => {
-    navigate("/login");
-  };
+    navigate("/login")
+  }
 
   return (
     <div className={`${style.signup} ${style.greenText}`}>
@@ -276,5 +280,5 @@ export const SignUp = () => {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}

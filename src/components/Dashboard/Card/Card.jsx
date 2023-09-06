@@ -7,11 +7,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getAllOrders } from "../../../redux/action";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  UilClipboardAlt,
-  UilUsdSquare,
-  UilMoneyWithdrawal,
-} from "@iconscout/react-unicons";
+import { UilUsdSquare } from "@iconscout/react-unicons";
 
 export const Cards = () => {
   const dispatch = useDispatch();
@@ -24,30 +20,136 @@ export const Cards = () => {
 
   useEffect(() => {
     if (auth?.allOrders?.length > 0) {
-      const totalRevenue = auth.allOrders.reduce(
+      const sortedOrders = auth.allOrders.sort((a, b) => {
+        return new Date(a.orden.date) - new Date(b.orden.date);
+      });
+
+      const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+
+    const recentOrders = sortedOrders.filter((order) => {
+      return new Date(order.orden.date) >= twentyFourHoursAgo;
+    });
+
+      const fifteenDaysAgo = new Date();
+      fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
+
+      const recentFifteenDaysOrders = sortedOrders.filter((order) => {
+        return new Date(order.orden.date) >= fifteenDaysAgo;
+      });
+
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const recentThirtyDaysOrders = sortedOrders.filter((order) => {
+        return new Date(order.orden.date) >= thirtyDaysAgo;
+      });
+
+      const totalRevenue = sortedOrders.reduce(
         (total, order) => total + order.orden.totalPrice,
         0
       );
 
-      const timeSeries = auth.allOrders.map((order) => ({
+      const recentRevenue = recentOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const fifteenDaysRevenue = recentFifteenDaysOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const thirtyDaysRevenue = recentThirtyDaysOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const timeSeries = recentOrders.map((order) => ({
         x: new Date(order.orden.date).getTime(),
         y: order.orden.totalPrice,
       }));
 
+      const fifteenDaysTimeSeries = recentFifteenDaysOrders.map((order) => ({
+        x: new Date(order.orden.date).getTime(),
+        y: order.orden.totalPrice,
+      }));
+
+      const thirtyDaysTimeSeries = recentThirtyDaysOrders.map((order) => ({
+        x: new Date(order.orden.date).getTime(),
+        y: order.orden.totalPrice,
+      }));
+
+      const totalSales = sortedOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const recentSales = recentOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const fifteenDaysSales = recentFifteenDaysOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const thirtyDaysSales = recentThirtyDaysOrders.reduce(
+        (total, order) => total + order.orden.totalPrice,
+        0
+      );
+
+      const salesPercentage = (recentSales / totalSales) * 100;
+      const fifteenDaysSalesPercentage = (fifteenDaysSales / totalSales) * 100;
+      const thirtyDaysSalesPercentage = (thirtyDaysSales / totalSales) * 100;
+
       setSalesData([
         {
-          title: "Sales",
+          title: "Sales (Last 24 Hours)",
           color: {
             backGround: "linear-gradient(180deg, #d0e1d6 0%, #8cb799 100%)",
             boxShadow: "0px 10px 20px 0px #e0c6f5",
           },
-          barValue: ((totalRevenue / 1000) * 100).toFixed(2),
-          value: totalRevenue.toFixed(2),
+          barValue: salesPercentage.toFixed(2),
+          value: recentRevenue.toFixed(2),
           png: UilUsdSquare,
           series: [
             {
               name: "Sales",
               data: timeSeries,
+            },
+          ],
+        },
+        {
+          title: "Sales (Last 15 Days)",
+          color: {
+            backGround: "linear-gradient(180deg, #d0e1d6 0%, #8cb799 100%)",
+            boxShadow: "0px 10px 20px 0px #e0c6f5",
+          },
+          barValue: fifteenDaysSalesPercentage.toFixed(2),
+          value: fifteenDaysRevenue.toFixed(2),
+          png: UilUsdSquare,
+          series: [
+            {
+              name: "Sales",
+              data: fifteenDaysTimeSeries,
+            },
+          ],
+        },
+        {
+          title: "Sales (Last 30 Days)",
+          color: {
+            backGround: "linear-gradient(180deg, #d0e1d6 0%, #8cb799 100%)",
+            boxShadow: "0px 10px 20px 0px #e0c6f5",
+          },
+          barValue: thirtyDaysSalesPercentage.toFixed(2),
+          value: thirtyDaysRevenue.toFixed(2),
+          png: UilUsdSquare,
+          series: [
+            {
+              name: "Sales",
+              data: thirtyDaysTimeSeries,
             },
           ],
         },
@@ -91,8 +193,8 @@ export const Card = (props) => {
 };
 
 function CompactCard({ param, setExpanded }) {
-  // CompactCard
   const Png = param.png;
+
   return (
     <motion.div
       className={style.CompactCard}
@@ -115,7 +217,7 @@ function CompactCard({ param, setExpanded }) {
       <div className={style.detail}>
         <Png />
         <span>${param.value}</span>
-        <span>Last 24 Hours</span>
+        <span>{param.timePeriod}</span>
       </div>
     </motion.div>
   );
@@ -128,7 +230,6 @@ function ExpandedCard({ param, setExpanded }) {
         type: "area",
         height: "auto",
       },
-
       dropShadow: {
         enabled: false,
         enabledOnSeries: undefined,
@@ -138,7 +239,6 @@ function ExpandedCard({ param, setExpanded }) {
         color: "#000",
         opacity: 0.35,
       },
-
       fill: {
         colors: ["#fff"],
         type: "gradient",
@@ -160,18 +260,11 @@ function ExpandedCard({ param, setExpanded }) {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z",
-        ],
+        categories: [],
       },
     },
   };
+
   return (
     <motion.div
       className={style.ExpandedCard}
@@ -181,23 +274,16 @@ function ExpandedCard({ param, setExpanded }) {
       }}
       layoutId="expandableCard"
     >
-      <div style={{ alignSelf: "flex-end", cursor: "pointer", color: "white" }}>
+      <div
+        style={{ alignSelf: "flex-end", cursor: "pointer", color: "white" }}
+      >
         <UilTimes onClick={setExpanded} />
       </div>
       <span>{param.title}</span>
       <div className={style.chartContainer}>
         <Chart options={data.options} series={param.series} type="area" />
       </div>
-      <span>Last 24 hours</span>
+      <span>{param.timePeriod}</span>
     </motion.div>
   );
 }
-
-/*
-<CircularProgressbar
-              className={style.CircularProgressbar} 
-              value={param.barValue}
-              text={`${param.barValue}%`}
-              trail={param}
-              />
-*/

@@ -14,9 +14,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button"
 import TextField from '@mui/material/TextField'
+import Pagination from '@mui/material/Pagination'
 import Paper from "@mui/material/Paper";
 import { alertAcept } from '../../SweetAlert/SweetAlert';
 import { Form } from '../../Form/Form';
+import loader from "../../../assets/loaderGif.gif";
 
 
 const makeStyle = (status) => {
@@ -60,9 +62,14 @@ export const ProductSection = () => {
     stock: "",
   })
 
+  const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1); // Página actual
+  const itemsPerPage = 10; // Cantidad de elemen
+  const [searchTerm, setSearchTerm] = useState("");
+  const [rowsSearch, setRowsSearch] = useState([])
 
   const token = JSON.parse(localStorage.getItem('profile'))?.token || null;
-
 
   const dataProducts = async () => {
     try {
@@ -79,13 +86,13 @@ export const ProductSection = () => {
   }
 
   const updateProduct = async (id, dataProducts) => {
+    setLoading(true)
     try {
       await axios.patch(`${VITE_SERVER_URL}/products/${id}`, dataProducts, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
-
       const x = rows.filter(s => s.id === Number(id) && s.name)
       if (updateType === 'status') {
         if (statusProduct.active === false) {
@@ -108,9 +115,11 @@ export const ProductSection = () => {
           `The product  <b>${x.map((s) => s.name)}</b> now has a stock of <b>${inputsStock.stock}</b>`)
         setUpdateType("")
       }
+      setLoading(false)
 
     }
     catch (error) {
+      setLoading(false)
       console.log("sms error: ====>", error.message);
     }
   }
@@ -118,15 +127,18 @@ export const ProductSection = () => {
 
   const handleStatus = (event) => {
     event.preventDefault();
+    // setLoading(true)
     const change = 'status'
     const id = event.target.id
     const value = event.target.value
     let status = ""
     if (value === 'true') {
       status = false
+      // setLoading(false)
     }
     else {
       status = true
+      // setLoading(false)
     }
     setUpdateType('status'); //dice que se esta cambiando
     setstatusProduct({ id: id, active: status });
@@ -149,11 +161,19 @@ export const ProductSection = () => {
       updateProduct(inputsStock.id, DataToSend);
     }
 
-    dataProducts()
+    Promise.all([dataProducts()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        setLoading(false);
+      });
   }, [statusProduct, updateType, inputsPrice])
 
   const handleKeyPressPrice = (event) => {
     if (event.key === 'Enter') {
+      // setLoading(true)
       const id = event.target.id;
       const priceUpdate = event.target.value;
       if (priceUpdate > "0") {
@@ -161,18 +181,20 @@ export const ProductSection = () => {
         setInputsPrice({ id: id, price: priceUpdate })
         const resetinput = document.querySelector(`input[name="inputprice"][id="${id}"]`);
         resetinput.value = ""
+        // setLoading(false)
 
       } else {
-        alertAcept("error", "Update Price", `the price USD ${priceUpdate} is invalid`, "valor invalido");
-        alert("error price")
+        alertAcept("error", "Update Price", "", `the price <b>${priceUpdate}</b> USD is Invalid`);
         const resetinput = document.querySelector(`input[name="inputprice"][id="${id}"]`);
         resetinput.value = ""
+        // setLoading(false)
       }
     }
   }
 
   const handleKeyPressStock = (event) => {
     if (event.key === 'Enter') {
+      // setLoading(true)
       const id = event.target.id;
       const value = event.target.value;
       if (value > 0) {
@@ -180,7 +202,12 @@ export const ProductSection = () => {
         setInputsStock({ id: id, stock: value })
         const resetinput = document.querySelector(`input[name="inputstock"][id="${id}"]`);
         resetinput.value = ""
-
+        // setLoading(false)
+      } else {
+        alertAcept("error", "Update Stock", "", `<b>${value}</b> is not a valid value for the stock`);
+        const resetinput = document.querySelector(`input[name="inputstock"][id="${id}"]`);
+        resetinput.value = ""
+        // setLoading(false)
       }
     }
   }
@@ -197,133 +224,194 @@ export const ProductSection = () => {
 
   }
 
+  //paginate
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      if (rowsSearch.length === 0) {
+        alertAcept("info","Search Product","they were not found products")
+      }else{
+        setTotalPages(Math.ceil(rowsSearch.length / itemsPerPage));
+      }
+      
+    }
+    if (searchTerm.length === 0) {
+      setTotalPages(Math.ceil(rows.length / itemsPerPage));
+    }
+  }, [rows, rowsSearch, searchTerm]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  let paginated = [];
+  if (searchTerm.length > 0) {
+    paginated = rowsSearch?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  }
+  if (searchTerm.length === 0) {
+    paginated = rows?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  }
+  //end paginate
+
+  //search 
+
+  const onchangeSearch = (event) => {
+    const { value } = event.target
+    setSearchTerm(value)
+    search(value)
+    // setPage(1)
+  }
+
+  const search = (value) => {
+    const dataFilter = rows.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
+    setRowsSearch(dataFilter)
+  }
+  console.log("rows",rows);
+  console.log("rowsearch",rowsSearch);
+  console.log("searchterm",searchTerm);
+
+  //end search
   return (
-    <main className={style.CustomerSection}>
-      <h1>Products</h1>
-      <Table  >
-        <TableRow className={style.head}>
-          <TextField
-            align="center"
-            label="Search"
-            variant="outlined"
-            fullWidth
-            // value={searchTerm}
-            // onChange={(e) => setSearchTerm(e.target.value)}
-            className={style.searchBar}
-            style={{ marginBottom: "10px", width: "90%" }}
-          />
-          </TableRow>
-        <TableRow className={style.head}>
-          <Button
-            align="left"
-            variant="outlined"
-            size="small"
-            name="form"
-            onClick={handleProduct}
-          >
-            New Product
-          </Button>
-        </TableRow>
-      </Table>
-      <div className={style.Table}>
+    <>
+      {loading === true ? (
+        <div className={style.prodsContLoader}>
+          <img src={loader} alt="Loader"></img>
+        </div>
+      ) : (
+        <main className={style.CustomerSection}>
+          <h1>Products</h1>
+          <Table>
+            <TableRow className={style.head}>
+              <TableCell className={style.modTableCell}>
+                <TextField
+                  align="center"
+                  label="Search"
+                  variant="outlined"
+                  fullWidth
+                  value={searchTerm}
+                  onChange={onchangeSearch}
+                  style={{ marginBottom: "0px", width: "90%" }}
+                />
+              </TableCell>
+              <TableCell>
+                <Button
+                  align="center"
+                  variant="outlined"
+                  size="small"
+                  name="form"
+                  onClick={handleProduct}
+                >
+                  New Product
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Pagination
+                  count={totalPages}
+                  page={page}
+                  onChange={handleChangePage}
+                  className={style.Pagination}
+                />
+              </TableCell>
+            </TableRow>
+          </Table>
+          <div className={style.Table}>
+            <TableContainer
+              // component={Paper}
+              style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+            >
+              {!viewForm ?
 
-        <TableContainer
-          // component={Paper}
-          style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
-        >
-          {!viewForm ?
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow className={style.head}>
-                  <TableCell>Image</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="left">price</TableCell>
-                  <TableCell align="left">stock</TableCell>
-                  <TableCell align="left">Status</TableCell>
-                  <TableCell align="left"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody style={{ broder: "3px solid black", color: "white", backgroundColor: "transparent" }}>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                  // className={style.tableRowContainer}
-                  // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      <img className={style.imageProduct} src={row.image} alt='product photo' >
-                      </img>
-                    </TableCell>
-                    <TableCell component="th" scope="row">{row.name}</TableCell>
-                    <TableCell align="left">
-                      <label >USD  </label>
-                      <input
-                        id={row.id}
-                        name='inputprice'
-                        className={style.inputs}
-                        type="Number"
-                        placeholder={row.price}
-                        min="1"
-                        // onChange={handleChangePrice}
-                        onKeyDown={handleKeyPressPrice}
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow className={style.head}>
+                      <TableCell>Image</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="left">price</TableCell>
+                      <TableCell align="left">stock</TableCell>
+                      <TableCell align="left">Status</TableCell>
+                      <TableCell align="left"></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody style={{ broder: "3px solid black", color: "white", backgroundColor: "transparent" }}>
+                    {paginated?.length > 0 && paginated?.map((row) => (
+                      <TableRow
+                        key={row.name}
+                      // className={style.tableRowContainer}
+                      // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                       >
-                      </input>
-                    </TableCell>
-                    <TableCell align="left">
-                      <input
-                        id={row.id}
-                        name='inputstock'
-                        className={style.inputs}
-                        type="Number"
-                        placeholder={row.stock}
-                        min={row.stock}
-                        onKeyDown={handleKeyPressStock}
-                      >
-                      </input>
-                    </TableCell>
-                    <TableCell align="left">
-                      <button type="submit"
-                        className={style.buttonstatus}
-                        style={makeStyle(row.active)}
-                        value={row.active}
-                        name={row.name}
-                        id={row.id}
-                        onClick={handleStatus}
-                      >
-                        {String(row.active)}
-                      </button>
-                    </TableCell>
-                    <TableCell align="left" className={style.Details}>
-                      <Button
-                        align="center"
-                        variant="outlined"
-                        size="small"
-                        name="detail"
-                        onClick={handleDteail}
-                      >
-                        Detail
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            :
-            <>
-              <Button
-                align="center"
-                variant="outlined"
-                size="small"
-                name="close"
-                onClick={handleProduct}
-              >x
-              </Button>
-              <Form />
-            </>
+                        <TableCell component="th" scope="row">
+                          <img className={style.imageProduct} src={row.image} alt='product photo' >
+                          </img>
+                        </TableCell>
+                        <TableCell component="th" scope="row">{row.name}</TableCell>
+                        <TableCell align="left">
+                          <label >USD  </label>
+                          <input
+                            id={row.id}
+                            name='inputprice'
+                            className={style.inputs}
+                            type="Number"
+                            placeholder={row.price}
+                            min="1"
+                            // onChange={handleChangePrice}
+                            onKeyDown={handleKeyPressPrice}
+                          >
+                          </input>
+                        </TableCell>
+                        <TableCell align="left">
+                          <input
+                            id={row.id}
+                            name='inputstock'
+                            className={style.inputs}
+                            type="Number"
+                            placeholder={row.stock}
+                            min={row.stock}
+                            onKeyDown={handleKeyPressStock}
+                          >
+                          </input>
+                        </TableCell>
+                        <TableCell align="left">
+                          <button type="submit"
+                            className={style.buttonstatus}
+                            style={makeStyle(row.active)}
+                            value={row.active}
+                            name={row.name}
+                            id={row.id}
+                            onClick={handleStatus}
+                          >
+                            {String(row.active)}
+                          </button>
+                        </TableCell>
+                        <TableCell align="left" className={style.Details}>
+                          <Button
+                            align="center"
+                            variant="outlined"
+                            size="small"
+                            name="detail"
+                            onClick={handleDteail}
+                          >
+                            Detail
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                :
+                <>
+                  <Button
+                    align="center"
+                    variant="outlined"
+                    size="small"
+                    name="close"
+                    onClick={handleProduct}
+                  >x
+                  </Button>
+                  <Form />
+                </>
 
-          }
-        </TableContainer>
-      </div>
-    </main>
+              }
+            </TableContainer>
+          </div>
+        </main>
+      )}</>
   );
 }

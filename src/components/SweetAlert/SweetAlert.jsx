@@ -48,9 +48,9 @@ export const alertAcept = (icon, title, text, html, footer) => {
             background: 'var(--verdeClaro)',
             confirmButtonText: 'Accept',
             confirmButtonColor: 'var(--verdePrincipal)',
-            allowOutsideClick: true,
-            allowEscapeKey: true,
-            allowEnterKey: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
             stopKeydownPropagation: false,
         })
     )

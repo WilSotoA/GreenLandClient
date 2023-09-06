@@ -1,5 +1,3 @@
-import axios from "axios"
-const { VITE_SERVER_URL } = import.meta.env
 import {
   PREV,
   NEXT,
@@ -18,7 +16,12 @@ import {
   GET_DETAIL_ORDERS,
   DELETE_REVIEW,
   GET_USERS_ADMIN,
+  UNDO_PURCHASE_FORM,
 } from "./actionType"
+
+import axios from "axios"
+const { VITE_SERVER_URL } = import.meta.env
+
 
 export const paginatePrev = () => {
   return {
@@ -207,3 +210,9 @@ export const getUsers = () => {
     }
   }
 }
+
+export const undoPurchaseForm = () => {
+  return {
+    type: UNDO_PURCHASE_FORM,
+  };
+};

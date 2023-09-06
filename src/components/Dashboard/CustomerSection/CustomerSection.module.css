@@ -47,6 +47,14 @@
     color: #00b5ff !important;
   }
 
+  .prodsContLoader {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
   .Table h3{
     margin-bottom: 20px !important;
   }

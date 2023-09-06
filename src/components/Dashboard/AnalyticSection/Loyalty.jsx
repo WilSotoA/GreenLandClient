@@ -77,6 +77,7 @@ const LoyaltyChart = () => {
         xaxis: {
           categories: customerNames,
         },
+        colors: ['#8cb799', '#d0e1d6', '#e6efe9'],
       },
       series: [
         {

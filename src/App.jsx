@@ -1,5 +1,7 @@
 import { useEffect } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
+import { Navigate } from "react-router-dom"
+import { useSelector } from "react-redux/es/hooks/useSelector"
 import { NavBar } from "./components/NavBar/NavBar"
 import { Home } from "./components/Home/Home"
 import { Footer } from "./components/footer/Footer"
@@ -24,10 +26,13 @@ import { CustomerSection } from "./components/Dashboard/CustomerSection/Customer
 import { ProductSection } from "./components/Dashboard/ProductSection/ProductSection"
 import AnalyticSection from "./components/Dashboard/AnalyticSection/AnalyticSection"
 import Reviews from "./components/Reviews/Review"
+import { UndoPurchaseForm } from "./components/UndoPurchaseForm/UndoPurchaseForm"
+import { NotFound404 } from "./components/NotFound404/NotFound404"
 
 function App() {
   const location = useLocation()
   const dispatch = useDispatch()
+  const userLogged = JSON.parse(localStorage.getItem("profile"))
 
   useEffect(() => {
     const storedProfile = JSON.parse(localStorage.getItem("profile"))
@@ -52,7 +57,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/shop" element={<Products />} />
         <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login/:verificado?" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/about" element={<About />} />
         <Route path="/form" element={<Form />} />
@@ -100,7 +105,11 @@ function App() {
             </DashboardLayout>
           }
         />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/undo-purchase" element={<UndoPurchaseForm />} />
+        <Route
+          path="/profile"
+          element={userLogged ? <UserProfile /> : <NotFound404 />}
+        />
       </Routes>
       {location.pathname !== "/" &&
         location.pathname !== "/dashboard" &&
