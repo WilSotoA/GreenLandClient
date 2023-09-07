@@ -19,3 +19,9 @@
   min-height: 380px;
   overflow: auto hidden;
 }
+
+@media (min-width: 1300px) {
+  .AnalyticSection {
+    grid-template-columns: 1fr 1fr;
+  }
+}

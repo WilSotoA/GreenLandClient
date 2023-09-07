@@ -1,78 +1,83 @@
-.CustomerSection{
+.CustomerSection {
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   max-height: 95%;
+  overflow: auto;
 }
 
-.Table{
-    height: 100%;
-    border: 1px solid #ddd;
-    overflow-y: scroll;
-    
+.Table {
+  height: 100%;
+  border: 1px solid #ddd;
+  overflow-y: scroll;
+
 }
-.Table::-webkit-scrollbar{
-    width: 7px;
+
+.Table::-webkit-scrollbar {
+  width: 7px;
 }
-.Table::-webkit-scrollbar-thumb{
-    background-color: var(--verdePrincipal);
-    border-radius: 10px;
+
+.Table::-webkit-scrollbar-thumb {
+  background-color: var(--verdePrincipal);
+  border-radius: 10px;
 }
-.modTableContainer{
+
+.modTableContainer {
   height: 100%;
 }
-.MuiTableRow-root > * {
-    padding: 10px;
-  }
-  
-  .head > * {
-    font-weight: bold !important;
-  }
-  
-  
-  .Table:first-child {
-    border-radius: 0.7rem !important;
-  }
-  .buttonstatus {
-    border: 1px var(--verdePrincipal);
-    padding: 8px;
-    border-radius: 9px;
-  }
-  .buttonstatus:hover{
-    cursor: pointer;
-  }
-  
-  .Details {
-    color: #00b5ff !important;
-  }
 
-  .prodsContLoader {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.MuiTableRow-root>* {
+  padding: 10px;
 }
 
-  .Table h3{
-    margin-bottom: 20px !important;
+.head>* {
+  font-weight: bold !important;
+}
+
+
+.Table:first-child {
+  border-radius: 0.7rem !important;
+}
+
+.buttonstatus {
+  border: 1px var(--verdePrincipal);
+  padding: 8px;
+  border-radius: 9px;
+}
+
+.buttonstatus:hover {
+  cursor: pointer;
+}
+
+.Details {
+  color: #00b5ff !important;
+}
+
+.prodsContLoader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Table h3 {
+  margin-bottom: 20px !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .Table {
+    margin-top: 2rem;
   }
-  
-  @media screen and (max-width: 1200px) {
-    .Table {
-      width: 170%;
-      margin-top: 2rem;
-    }
+}
+
+
+@media screen and (max-width: 768px) {
+  .Table {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  
-  @media screen and (max-width: 768px) {
-    .Table{
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 23rem;
-    }
-  }
+}

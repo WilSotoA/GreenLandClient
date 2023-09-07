@@ -1,33 +1,34 @@
-import { useState } from "react";
-import styled from "./Detail.module.css";
-import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getIdProduct } from "../../redux/action";
-import { BsCart2 } from "react-icons/bs";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useRef } from "react";
-import { alertConfirm, alertAcept } from "../SweetAlert/SweetAlert";
-import Reviews from "../Reviews/Review";
+import { useState } from "react"
+import styled from "./Detail.module.css"
+import { useParams, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { getIdProduct } from "../../redux/action"
+import { BsCart2 } from "react-icons/bs"
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"
+import { useRef } from "react"
+import { alertConfirm, alertAcept } from "../SweetAlert/SweetAlert"
+import Reviews from "../Reviews/Review"
 
 export const Detail = () => {
-  const dispatch = useDispatch();
-  const [isInCart, setIsInCart] = useState(false);
-  const quantityInputRef = useRef(null); // Crear una referencia
-  const { id } = useParams(); //recibimos el params id
-  const productDetail = useSelector((state) => state.productDetail);
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const [isInCart, setIsInCart] = useState(false)
+  const quantityInputRef1 = useRef(null)
+  const quantityInputRef2 = useRef(null)
+  const { id } = useParams() //recibimos el params id
+  const productDetail = useSelector((state) => state.productDetail)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(getIdProduct(id));
-    const products = JSON.parse(localStorage.getItem("cartProducts")) || [];
-    const existingProduct = products.find((p) => p.id === productDetail.id);
+    dispatch(getIdProduct(id))
+    const products = JSON.parse(localStorage.getItem("cartProducts")) || []
+    const existingProduct = products.find((p) => p.id === productDetail.id)
     if (existingProduct) {
-      setIsInCart(true);
+      setIsInCart(true)
     } else {
-      setIsInCart(false);
+      setIsInCart(false)
     }
-  }, [dispatch, id, productDetail.id]);
+  }, [dispatch, id, productDetail.id])
 
   const toggleCart = async () => {
     if (isInCart) {
@@ -35,20 +36,20 @@ export const Detail = () => {
         "warning",
         "Delete Product!",
         "Do you want to remove this product from your Car?"
-      );
+      )
       if (resAlertCar) {
         // alert("prueba si isInCart es true")
-        const products = JSON.parse(localStorage.getItem("cartProducts")) || [];
+        const products = JSON.parse(localStorage.getItem("cartProducts")) || []
         const updatedProducts = products.filter(
           (p) => p.id !== productDetail.id
-        );
-        localStorage.setItem("cartProducts", JSON.stringify(updatedProducts));
+        )
+        localStorage.setItem("cartProducts", JSON.stringify(updatedProducts))
       }
     } else {
       // alert("prueba si isInCart es false")
-      let quantity = parseInt(quantityInputRef.current.value);
+      let quantity = parseInt(quantityInputRef1.current.value)
       if (isNaN(quantity) || quantity < 1) {
-        quantity = 1;
+        quantity = 1
       }
 
       const product = {
@@ -59,77 +60,79 @@ export const Detail = () => {
         quantity: quantity,
         currency_id: "USD",
         picture_url: productDetail.image,
-      };
+      }
 
-      const products = JSON.parse(localStorage.getItem("cartProducts")) || [];
-      const existingProduct = products.find((p) => p.id === productDetail.id);
+      const products = JSON.parse(localStorage.getItem("cartProducts")) || []
+      const existingProduct = products.find((p) => p.id === productDetail.id)
 
       if (!existingProduct) {
-        products.push(product);
-        localStorage.setItem("cartProducts", JSON.stringify(products));
+        products.push(product)
+        localStorage.setItem("cartProducts", JSON.stringify(products))
       } else {
-        console.log("Este producto ya está en el carrito.");
+        console.log("Este producto ya está en el carrito.")
       }
     }
-    setIsInCart(!isInCart);
-  };
+    setIsInCart(!isInCart)
+  }
 
-  const [whis, setWhis] = useState(false);
+  const [whis, setWhis] = useState(false)
 
   useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("whislist")) || [];
+    const product = JSON.parse(localStorage.getItem("whislist")) || []
     product.map((prod) => {
       if (prod.id === Number(id)) {
-        setWhis(true);
+        setWhis(true)
       }
-    });
-  }, [id, setWhis]);
+    })
+  }, [id, setWhis])
 
   const handleWhisList = async () => {
-    const product = JSON.parse(localStorage.getItem("whislist")) || [];
-    const existingProduct = product?.find((p) => p.id === productDetail.id);
+    const product = JSON.parse(localStorage.getItem("whislist")) || []
+    const existingProduct = product?.find((p) => p.id === productDetail.id)
     if (!whis) {
       //si false
       if (!existingProduct) {
-        product.push(productDetail);
-        localStorage.setItem("whislist", JSON.stringify(product));
-        setWhis(true);
+        product.push(productDetail)
+        localStorage.setItem("whislist", JSON.stringify(product))
+        setWhis(true)
       } else {
-        console.log("Este producto ya está en el carrito.");
+        console.log("Este producto ya está en el carrito.")
       }
     } else {
       const resAlert = await alertConfirm(
         "warning",
         "Delete Product!",
         "Do you want to remove this product from your wish list?"
-      );
+      )
       if (resAlert) {
-        const updatedProducts = product.filter(
-          (p) => p.id !== productDetail.id
-        );
-        localStorage.setItem("whislist", JSON.stringify(updatedProducts));
-        setWhis(false);
+        const updatedProducts = product.filter((p) => p.id !== productDetail.id)
+        localStorage.setItem("whislist", JSON.stringify(updatedProducts))
+        setWhis(false)
       }
     }
-  };
+  }
 
   const handleQuantity = (event) => {
-    const value = Number(event.target.value);
+    const value = Number(event.target.value)
     if (value > productDetail.stock) {
-      quantityInputRef.current.value = "";
+      quantityInputRef1.current.value = 1
+      quantityInputRef2.current.value = 1
       alertAcept(
         "error",
         "Quantity Stock",
         "",
         `<p>value exceeds quantity in stock, Maximium Purchase: <b>${productDetail.stock}</b></p>`
-      );
+      )
     }
-  };
+    console.log(quantityInputRef1.current.value)
+    console.log(quantityInputRef2.current.value)
+  }
 
   const handleBuyNow = () => {
-    let quantity = parseInt(quantityInputRef.current.value);
-    const products2 = JSON.parse(localStorage.getItem("cartProducts")) || [];
-    const existingProduct = products2.find((p) => p.id === productDetail.id);
+    let quantity = parseInt(quantityInputRef1.current.value)
+    console.log(quantity)
+    const products2 = JSON.parse(localStorage.getItem("cartProducts")) || []
+    const existingProduct = products2.find((p) => p.id === productDetail.id)
     const product = {
       id: productDetail.id,
       title: productDetail.name,
@@ -138,17 +141,17 @@ export const Detail = () => {
       quantity: quantity,
       currency_id: "USD",
       picture_url: productDetail.image,
-    };
-
-    if (!existingProduct) {
-      products2.push(product);
-      localStorage.setItem("cartProducts", JSON.stringify(products2));
-    } else {
-      console.log("Este producto ya está en el carrito.");
     }
 
-    navigate("/cart");
-  };
+    if (!existingProduct) {
+      products2.push(product)
+      localStorage.setItem("cartProducts", JSON.stringify(products2))
+    } else {
+      console.log("Este producto ya está en el carrito.")
+    }
+
+    navigate("/cart")
+  }
 
   return (
     <main className={styled.container}>
@@ -193,7 +196,7 @@ export const Detail = () => {
                 // value={value2}
                 type="Number"
                 placeholder="1"
-                ref={quantityInputRef}
+                ref={quantityInputRef1}
                 min="1"
                 max={productDetail.stock}
                 onChange={handleQuantity}
@@ -240,7 +243,7 @@ export const Detail = () => {
             // value={value2}
             type="Number"
             placeholder="1"
-            ref={quantityInputRef}
+            ref={quantityInputRef2}
             min="1"
             max={productDetail.stock}
             onChange={handleQuantity}
@@ -281,5 +284,5 @@ export const Detail = () => {
         <Reviews productId={id} />
       </section>
     </main>
-  );
-};
+  )
+}

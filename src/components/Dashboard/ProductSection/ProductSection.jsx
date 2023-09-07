@@ -18,6 +18,7 @@ import Pagination from '@mui/material/Pagination'
 import Paper from "@mui/material/Paper";
 import { alertAcept } from '../../SweetAlert/SweetAlert';
 import { Form } from '../../Form/Form';
+import { ProductUpdate } from '../ProductUdate/ProductUpdate'
 import loader from "../../../assets/loaderGif.gif";
 
 
@@ -211,28 +212,26 @@ export const ProductSection = () => {
       }
     }
   }
-  const [viewForm, setViewForm] = useState(false)
-  const handleProduct = (event) => {
+  const [viewForm, setViewForm] = useState("products")
+  const [selecProduct, setSelecProduct] = useState({})
+  const handleRender = (event) => {
     const { id, name } = event.target
-    // const use = rows.filter(s => s.id === Number(id) && s)
-    // setSelectUser(use)
-    if (String(name) === 'close') setViewForm(false)
-    if (String(name) === 'form') setViewForm(true)
+    const product = rows?.filter(s => s.id === Number(id) && s)
+    setSelecProduct(product)
+    if (String(name) === 'close') { setViewForm("products") }
+    else { setViewForm(name) }
   }
-
-  const handleDteail = (event) => {
-
-  }
-
+  useEffect(() => {
+    dataProducts()
+  }, [selecProduct])
   //paginate
   useEffect(() => {
     if (searchTerm.length > 0) {
       if (rowsSearch.length === 0) {
-        alertAcept("info","Search Product","they were not found products")
-      }else{
+        alertAcept("info", "Search Product", "they were not found products")
+      } else {
         setTotalPages(Math.ceil(rowsSearch.length / itemsPerPage));
       }
-      
     }
     if (searchTerm.length === 0) {
       setTotalPages(Math.ceil(rows.length / itemsPerPage));
@@ -264,10 +263,6 @@ export const ProductSection = () => {
     const dataFilter = rows.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
     setRowsSearch(dataFilter)
   }
-  console.log("rows",rows);
-  console.log("rowsearch",rowsSearch);
-  console.log("searchterm",searchTerm);
-
   //end search
   return (
     <>
@@ -296,8 +291,8 @@ export const ProductSection = () => {
                   align="center"
                   variant="outlined"
                   size="small"
-                  name="form"
-                  onClick={handleProduct}
+                  name="formUser"
+                  onClick={handleRender}
                 >
                   New Product
                 </Button>
@@ -316,9 +311,9 @@ export const ProductSection = () => {
             <TableContainer
               // component={Paper}
               style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+              className={style.modTableContainer}
             >
-              {!viewForm ?
-
+              {viewForm === "products" && (
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow className={style.head}>
@@ -382,11 +377,12 @@ export const ProductSection = () => {
                         </TableCell>
                         <TableCell align="left" className={style.Details}>
                           <Button
+                            id={row.id}
                             align="center"
                             variant="outlined"
                             size="small"
-                            name="detail"
-                            onClick={handleDteail}
+                            name="formDetail"
+                            onClick={handleRender}
                           >
                             Detail
                           </Button>
@@ -395,23 +391,37 @@ export const ProductSection = () => {
                     ))}
                   </TableBody>
                 </Table>
-                :
+              )}
+              {viewForm === "formUser" && (
                 <>
                   <Button
                     align="center"
                     variant="outlined"
                     size="small"
                     name="close"
-                    onClick={handleProduct}
+                    onClick={handleRender}
                   >x
                   </Button>
                   <Form />
                 </>
+              )}
+              {viewForm === "formDetail" && (
+                <>
+                  <Button
+                    align="center"
+                    variant="outlined"
+                    size="small"
+                    name="close"
+                    onClick={handleRender}
+                  >x
+                  </Button>
+                  <ProductUpdate key={selecProduct.id} row={selecProduct[0]} />
+                </>
+              )}
 
-              }
             </TableContainer>
-          </div>
-        </main>
+          </div >
+        </main >
       )}</>
   );
 }

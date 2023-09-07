@@ -1,0 +1,410 @@
+.content {
+  position: relative;
+  width: 75%;
+  height: 90%;
+  margin: auto;
+}
+
+.loader {
+  margin: auto;
+}
+
+.tabContainer {
+  display: flex;
+  height: 100px;
+}
+
+.tabContent {
+  background-color: var(--verdeClaro);
+  height: calc(100% - 50px);
+  border-radius: 30px;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  background-color: var(--verdePrincipal);
+  border-radius: 30px;
+}
+
+.tabActive {
+  background-color: var(--verdeClaro);
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  margin-top: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.link > *:not(:last-child) {
+  margin-right: 8px;
+}
+
+.linkActive {
+  color: var(--verdePrincipal);
+}
+
+.userInfoGrid {
+  display: grid;
+  grid-template-columns: 0.3fr 0.7fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 95%;
+  height: 90%;
+  background: linear-gradient(
+    90deg,
+    hsla(142, 22%, 80%, 1) 1%,
+    hsla(141, 22%, 85%, 1) 73%,
+    hsla(141, 22%, 85%, 1) 100%
+  );
+  border-radius: 8px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.userPhotoCont {
+  grid-area: 1 / 1 / 2 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.photoContainer {
+  position: relative;
+  width: 80%;
+  border-radius: 8px;
+  border: 8px solid var(--verdePrincipal);
+  overflow: hidden;
+}
+
+.photoContainer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photoContainer:hover .overlay {
+  opacity: 1;
+}
+
+.userPhotoCont > h1,
+.userPhotoCont > h2 {
+  color: white;
+  background-color: var(--verdePrincipal);
+  font-weight: 400;
+  width: fit-content;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 100%;
+  margin-top: 10px;
+  font-size: 90%;
+}
+
+.userDetailCont {
+  grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.orderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.orderRowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 90%;
+  margin: 20px;
+  background-color: var(--verdePrincipal);
+  padding: 20px;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.orderRow {
+  width: fit-content;
+  font-size: 55%;
+  text-align: center;
+}
+
+.orderRow > h1 {
+  color: white;
+  font-weight: 500;
+}
+
+.orderRow > h2 {
+  color: var(--verdeClaro);
+  font-weight: lighter;
+}
+
+.orderContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderContainer::-webkit-scrollbar-thumb {
+  background: var(--verdePrincipal);
+  border-radius: 5px;
+}
+
+.userInfoGrid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.userInfoGrid::-webkit-scrollbar-thumb {
+  background: var(--verdePrincipal);
+  border-radius: 5px;
+}
+
+.userDetailCont form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 90%;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.inputRow {
+  margin: 0 auto;
+  width: 94%;
+}
+
+.input input {
+  height: 40px;
+  border: 3px outset var(--verdePrincipal);
+  border-radius: 8px;
+  outline-color: var(--verdePrincipal);
+  text-align: center;
+  font-size: 100%;
+  color: #a7c8b1;
+}
+
+.input input:hover {
+  background-color: var(--superLightGreen);
+}
+
+.input label {
+  color: var(--verdePrincipal);
+  font-weight: 500;
+}
+
+.forms button {
+  padding: 10px;
+  font-family: var(--fontGlobal);
+  color: white;
+  border-radius: 20px;
+  border-style: outset;
+  border-color: var(--verdeClaro);
+  background-color: var(--verdePrincipal);
+}
+
+.forms button:not([disabled]):hover {
+  background-color: #a7c8b1;
+  cursor: pointer;
+}
+
+.forms button:disabled {
+  cursor: not-allowed;
+}
+
+.input select {
+  height: 46px;
+  border: 3px outset var(--verdePrincipal);
+  border-radius: 8px;
+  outline-color: var(--verdePrincipal);
+  text-align: center;
+  font-size: 100%;
+  cursor: pointer;
+  color: var(--verdePrincipal);
+}
+
+.errorMessage {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #f44336;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 90%;
+}
+
+.customErrorIcon {
+  font-size: 20px;
+}
+
+.passwordContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.formPassword {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.formPassword button {
+  padding: 10px;
+  font-family: var(--fontGlobal);
+  color: white;
+  border-radius: 20px;
+  border-style: outset;
+  border-color: var(--verdeClaro);
+  background-color: var(--verdePrincipal);
+}
+
+.formPassword button:not([disabled]):hover {
+  background-color: #a7c8b1;
+  cursor: pointer;
+}
+
+.formPassword button:disabled {
+  cursor: not-allowed;
+}
+
+.orderContainer > span {
+  margin: auto;
+}
+
+@media (max-width: 950px) {
+  .tabName {
+    display: none;
+  }
+
+  .userInfoGrid {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 0.4fr 0.6fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: 95%;
+    height: 90%;
+    background: linear-gradient(
+      180deg,
+      hsla(142, 22%, 80%, 1) 1%,
+      hsla(141, 22%, 85%, 1) 73%,
+      hsla(141, 22%, 85%, 1) 100%
+    );
+  }
+
+  .photoContainer {
+    width: 70%;
+    border-radius: 8px;
+    border: 8px solid var(--verdePrincipal);
+    position: relative;
+  }
+
+  .userPhotoCont {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  .userDetailCont {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  .forms button {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabName {
+    display: none;
+  }
+
+  .userInfoGrid {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: 95%;
+    height: 90%;
+    background: linear-gradient(
+      180deg,
+      hsla(142, 22%, 80%, 1) 1%,
+      hsla(141, 22%, 85%, 1) 73%,
+      hsla(141, 22%, 85%, 1) 100%
+    );
+  }
+
+  .photoContainer {
+    width: 70%;
+    border-radius: 8px;
+    border: 8px solid var(--verdePrincipal);
+    position: relative;
+  }
+
+  .userPhotoCont {
+    grid-area: 1 / 1 / 2 / 2;
+    margin-bottom: 20px;
+  }
+
+  .userDetailCont {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  .formPassword {
+    width: 100%;
+  }
+
+  .forms button {
+    margin-top: 10px;
+  }
+}
